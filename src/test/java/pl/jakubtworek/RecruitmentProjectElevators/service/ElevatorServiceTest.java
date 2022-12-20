@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubtworek.RecruitmentProjectElevators.controller.*;
+import pl.jakubtworek.RecruitmentProjectElevators.data.ElevatorsTest;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
@@ -25,6 +26,13 @@ public class ElevatorServiceTest {
         elevatorService = new ElevatorServiceImpl(
                 elevatorDAO
         );
+
+        ElevatorsTest elevatorsTest = new ElevatorsTest();
+        when(elevatorDAO.findAll()).thenReturn(elevatorsTest.getElevators());
+        when(elevatorDAO.findElevatorToMove()).thenReturn(elevatorsTest.getElevatorsToMove());
+        when(elevatorDAO.findElevatorNotMoving()).thenReturn(Optional.ofNullable(elevatorsTest.getElevators().get(0)));
+        when(elevatorDAO.findById(anyInt())).thenReturn(Optional.ofNullable(elevatorsTest.getElevators().get(0)));
+        when(elevatorDAO.update(anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean())).thenReturn(elevatorsTest.getElevators().get(0));
     }
 
     @Test
@@ -33,8 +41,8 @@ public class ElevatorServiceTest {
         elevatorService.pickup(0, 4);
 
         // then
-        verify(elevatorDAO.findElevatorNotMoving());
-        verify(elevatorDAO.update(any(), any(), any(), anyBoolean(), anyBoolean()));
+        verify(elevatorDAO).findElevatorNotMoving();
+        verify(elevatorDAO).update(1, 0, 4, false, true);
     }
 
     @Test
@@ -43,8 +51,8 @@ public class ElevatorServiceTest {
         elevatorService.step();
 
         // then
-        verify(elevatorDAO.findElevatorNotMoving());
-        verify(elevatorDAO.update(any(), any(), any(), anyBoolean(), anyBoolean()));
+        verify(elevatorDAO).findElevatorToMove();
+        verify(elevatorDAO, times(2)).update(anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean());
     }
 
     @Test
@@ -53,6 +61,6 @@ public class ElevatorServiceTest {
         elevatorService.status();
 
         // then
-        verify(elevatorDAO.findAll());
+        verify(elevatorDAO).findAll();
     }
 }

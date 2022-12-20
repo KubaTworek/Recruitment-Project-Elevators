@@ -6,13 +6,18 @@ import java.util.*;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Elevator {
     private int id;
     private int numberOfFloor;
-    private boolean isMovingUp = false;
-    private boolean isMovingDown = false;
-    private Queue plannedFloors = new PriorityQueue();
+    private boolean isMovingUp;
+    private boolean isMovingDown;
+    private Queue<Elevator> plannedFloors;
+
+    public Elevator(int id, int numberOfFloor) {
+        this.id = id;
+        this.numberOfFloor = numberOfFloor;
+        this.isMovingUp = false;
+        this.isMovingDown = false;
+        this.plannedFloors = new PriorityQueue<>();
+    }
 }

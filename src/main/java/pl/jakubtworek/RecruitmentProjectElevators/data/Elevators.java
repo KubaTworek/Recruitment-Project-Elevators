@@ -13,10 +13,10 @@ public class Elevators {
             throw new RuntimeException("Not allowed. Please use getInstance() method");
         }
         for(int i = 0; i < 16; i++){
-            elevators.add(Elevator.builder()
-                    .numberOfElevator(i+1)
-                    .numberOfFloor(0)
-                    .build());
+            elevators.add(new Elevator(
+                    i+1,
+                    0
+            ));
         }
     }
 

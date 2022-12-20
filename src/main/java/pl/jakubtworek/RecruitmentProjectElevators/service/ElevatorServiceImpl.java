@@ -13,12 +13,12 @@ public class ElevatorServiceImpl implements ElevatorService{
     private final ElevatorDAO elevatorDAO;
 
     @Override
-    public void pickup() {
+    public void pickup(int destinationFloor) {
 
     }
 
     @Override
-    public Elevator update() {
+    public Elevator update(int id, int numberOfFloor, int destinationFloor) {
         return null;
     }
 

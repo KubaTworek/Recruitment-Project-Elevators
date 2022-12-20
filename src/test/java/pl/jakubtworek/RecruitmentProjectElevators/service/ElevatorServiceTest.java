@@ -30,35 +30,29 @@ public class ElevatorServiceTest {
     @Test
     void shouldReturnPickedElevator() {
         // when
-        when(elevatorDAO.findElevatorNotMoving()).thenReturn(Optional.of(new Elevator(1, 0)));
-        when(elevatorDAO.findAll()).thenReturn(List.of(new Elevator(1, 0)));
-
         elevatorService.pickup(0, 4);
-        List<Elevator> returnedElevators = elevatorService.status();
 
         // then
-        assertEquals(0, returnedElevators.get(0).getNumberOfFloor());
-        assertEquals(4, returnedElevators.get(0).getPlannedFloors().peek());
+        verify(elevatorDAO.findElevatorNotMoving());
+        verify(elevatorDAO.update(any(), any(), any(), anyBoolean(), anyBoolean()));
     }
 
     @Test
     void shouldMoveElevatorToProperFloor() {
         // when
-        elevatorService.pickup(0, 4);
-        List<Elevator> returnedElevators = elevatorService.status();
         elevatorService.step();
 
         // then
-        assertEquals(4, returnedElevators.get(0).getNumberOfFloor());
-        assertEquals(0, returnedElevators.get(0).getPlannedFloors().size());
+        verify(elevatorDAO.findElevatorNotMoving());
+        verify(elevatorDAO.update(any(), any(), any(), anyBoolean(), anyBoolean()));
     }
 
     @Test
     void shouldReturnAllElevators() {
         // when
-        List<Elevator> returnedElevators = elevatorService.status();
+        elevatorService.status();
 
         // then
-        assertEquals(16, returnedElevators.size());
+        verify(elevatorDAO.findAll());
     }
 }

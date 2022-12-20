@@ -15,18 +15,36 @@ public class ElevatorServiceImpl implements ElevatorService{
     @Override
     public void pickup(int sourceFloor, int destinationFloor) {
         Elevator elevator = elevatorDAO.findElevatorNotMoving().orElse(null);
-        elevator.getPlannedFloors().add(destinationFloor);
-        elevator.setMovingUp(true);
+        elevatorDAO.update(
+                elevator.getId(),
+                elevator.getNumberOfFloor(),
+                destinationFloor,
+                false,
+                true
+        );
     }
 
     @Override
     public void step() {
         List<Elevator> elevators = elevatorDAO.findElevatorToMove();
         for(Elevator elevator : elevators){
-            elevator.setNumberOfFloor(elevator.getPlannedFloors().poll());
-            elevator.setMovingUp(false);
-            elevator.getPlannedFloors().add(0);
-            elevator.setMovingDown(true);
+            if(elevator.isMovingDown()){
+                elevatorDAO.update(
+                        elevator.getId(),
+                        elevator.getPlannedFloors().poll(),
+                        null,
+                        false,
+                        false
+                );
+            } else {
+                elevatorDAO.update(
+                        elevator.getId(),
+                        elevator.getPlannedFloors().poll(),
+                        0,
+                        true,
+                        false
+                );
+            }
         }
     }
 

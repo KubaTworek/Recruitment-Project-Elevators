@@ -16,6 +16,16 @@ public class ElevatorsTest {
         }
     }
 
+    public void restart(){
+        elevators.clear();
+        for(int i = 0; i < 16; i++){
+            elevators.add(new Elevator(
+                    i+1,
+                    0
+            ));
+        }
+    }
+
     public List<Elevator> getElevators() {
         return elevators;
     }

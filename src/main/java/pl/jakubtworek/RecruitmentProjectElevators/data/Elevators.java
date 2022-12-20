@@ -1,9 +1,11 @@
 package pl.jakubtworek.RecruitmentProjectElevators.data;
 
+import org.springframework.stereotype.Component;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
 import java.util.*;
 
+@Component
 public class Elevators {
     private final List<Elevator> elevators = new ArrayList<>();
     private static volatile Elevators instance = null;

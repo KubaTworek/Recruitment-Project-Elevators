@@ -1,16 +1,36 @@
 package pl.jakubtworek.RecruitmentProjectElevators.controller;
 
-import org.springframework.http.ResponseEntity;
-import pl.jakubtworek.RecruitmentProjectElevators.model.ElevatorResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import pl.jakubtworek.RecruitmentProjectElevators.model.*;
+import pl.jakubtworek.RecruitmentProjectElevators.service.ElevatorService;
 
 import java.util.List;
 
-public interface ElevatorController {
-    void pickup();
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/elevators")
+public class ElevatorController {
+    private final ElevatorService elevatorService;
 
-    ResponseEntity<ElevatorResponse> update();
+    @PostMapping("/pickup")
+    public void pickup(@RequestParam int sourceFloor,
+                       @RequestParam int destinationFloor) {
+        elevatorService.pickup(sourceFloor, destinationFloor);
+    }
 
-    void step();
+    @PutMapping("/step")
+    public void step() {
+        elevatorService.step();
+    }
 
-    ResponseEntity<List<ElevatorResponse>> status();
+    @GetMapping
+    public ResponseEntity<List<ElevatorResponse>> status() {
+        List<ElevatorResponse> response = elevatorService.status()
+                .stream()
+                .map(Elevator::convertToResponse)
+                .toList();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

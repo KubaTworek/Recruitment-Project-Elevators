@@ -1,7 +1,11 @@
 package pl.jakubtworek.RecruitmentProjectElevators.model;
 
+import lombok.*;
+
+@Data
+@Builder
 public class ElevatorResponse {
-    private int numberOfElevator;
-    private int numberOfFloorNow;
-    private int numberOfFloorPredicted;
+    private int id;
+    private int numberOfFloor;
+    private Integer numberOfClosestDestination;
 }

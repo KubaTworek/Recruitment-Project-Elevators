@@ -20,4 +20,20 @@ public class Elevator {
         this.isMovingDown = false;
         this.plannedFloors = new PriorityQueue<>();
     }
+
+    public ElevatorResponse convertToResponse() {
+        if (this.getPlannedFloors().size() == 0) {
+            return ElevatorResponse.builder()
+                    .id(id)
+                    .numberOfFloor(numberOfFloor)
+                    .numberOfClosestDestination(null)
+                    .build();
+        } else {
+            return ElevatorResponse.builder()
+                    .id(id)
+                    .numberOfFloor(numberOfFloor)
+                    .numberOfClosestDestination(plannedFloors.peek())
+                    .build();
+        }
+    }
 }

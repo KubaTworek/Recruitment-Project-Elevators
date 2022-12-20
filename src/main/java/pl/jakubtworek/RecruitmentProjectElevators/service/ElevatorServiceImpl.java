@@ -1,6 +1,5 @@
 package pl.jakubtworek.RecruitmentProjectElevators.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
@@ -8,9 +7,12 @@ import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ElevatorServiceImpl implements ElevatorService {
     private final ElevatorDAO elevatorDAO;
+
+    public ElevatorServiceImpl(ElevatorDAO elevatorDAO) {
+        this.elevatorDAO = elevatorDAO;
+    }
 
     @Override
     public void pickup(int sourceFloor, int destinationFloor) {

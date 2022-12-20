@@ -1,17 +1,13 @@
 package pl.jakubtworek.RecruitmentProjectElevators.model;
 
-import lombok.*;
-
 import java.util.*;
 
-@Getter
-@Setter
 public class Elevator {
-    private int id;
+    private final int id;
     private int numberOfFloor;
     private boolean isMovingUp;
     private boolean isMovingDown;
-    private Queue<Integer> plannedFloors;
+    private final Queue<Integer> plannedFloors;
 
     public Elevator(int id, int numberOfFloor) {
         this.id = id;
@@ -35,5 +31,37 @@ public class Elevator {
                     .numberOfClosestDestination(plannedFloors.peek())
                     .build();
         }
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public int getNumberOfFloor() {
+        return this.numberOfFloor;
+    }
+
+    public boolean isMovingUp() {
+        return this.isMovingUp;
+    }
+
+    public boolean isMovingDown() {
+        return this.isMovingDown;
+    }
+
+    public Queue<Integer> getPlannedFloors() {
+        return this.plannedFloors;
+    }
+
+    public void setNumberOfFloor(int numberOfFloor) {
+        this.numberOfFloor = numberOfFloor;
+    }
+
+    public void setMovingUp(boolean isMovingUp) {
+        this.isMovingUp = isMovingUp;
+    }
+
+    public void setMovingDown(boolean isMovingDown) {
+        this.isMovingDown = isMovingDown;
     }
 }

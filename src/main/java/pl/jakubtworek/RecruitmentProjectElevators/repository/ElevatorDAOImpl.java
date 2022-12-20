@@ -1,6 +1,5 @@
 package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
@@ -9,9 +8,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
-@RequiredArgsConstructor
 public class ElevatorDAOImpl implements ElevatorDAO {
     private final Elevators elevators;
+
+    public ElevatorDAOImpl(Elevators elevators) {
+        this.elevators = elevators;
+    }
 
     @Override
     public Elevator update(int id, int actualFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp) {

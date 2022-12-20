@@ -56,6 +56,28 @@ public class ElevatorDAOTest {
     }
 
     @Test
+    void shouldReturnNotMovingElevator() {
+        // when
+        Elevator returnedElevator = elevatorDAO.findElevatorNotMoving().orElse(null);
+
+        // then
+        assertEquals(1, returnedElevator.getId());
+        assertEquals(0, returnedElevator.getNumberOfFloor());
+        assertEquals(0, returnedElevator.getPlannedFloors().size());
+        assertFalse(returnedElevator.isMovingDown());
+        assertFalse(returnedElevator.isMovingUp());
+    }
+
+    @Test
+    void shouldReturnAllElevatorsToMove() {
+        // when
+        List<Elevator> returnedElevators = elevatorDAO.findElevatorToMove();
+
+        // then
+        assertEquals(0, returnedElevators.size());
+    }
+
+    @Test
     void shouldReturnNullByWrongId() {
         // when
         Elevator returnedElevator = elevatorDAO.findById(99).orElse(null);

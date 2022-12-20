@@ -11,7 +11,7 @@ public class Elevator {
     private int numberOfFloor;
     private boolean isMovingUp;
     private boolean isMovingDown;
-    private Queue<Elevator> plannedFloors;
+    private Queue<Integer> plannedFloors;
 
     public Elevator(int id, int numberOfFloor) {
         this.id = id;

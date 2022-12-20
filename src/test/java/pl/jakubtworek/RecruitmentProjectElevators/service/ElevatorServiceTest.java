@@ -7,10 +7,10 @@ import pl.jakubtworek.RecruitmentProjectElevators.controller.*;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class ElevatorServiceTest {
     @Mock
@@ -30,7 +30,10 @@ public class ElevatorServiceTest {
     @Test
     void shouldReturnPickedElevator() {
         // when
-        elevatorService.pickup(4);
+        when(elevatorDAO.findElevatorNotMoving()).thenReturn(Optional.of(new Elevator(1, 0)));
+        when(elevatorDAO.findAll()).thenReturn(List.of(new Elevator(1, 0)));
+
+        elevatorService.pickup(0, 4);
         List<Elevator> returnedElevators = elevatorService.status();
 
         // then
@@ -39,21 +42,9 @@ public class ElevatorServiceTest {
     }
 
     @Test
-    void shouldReturnUpdatedElevator() {
-        // when
-        elevatorService.update(1, 1, 5);
-        List<Elevator> returnedElevators = elevatorService.status();
-
-        // then
-        assertEquals(1, returnedElevators.get(0).getId());
-        assertEquals(1, returnedElevators.get(0).getNumberOfFloor());
-        assertEquals(5, returnedElevators.get(0).getPlannedFloors().peek());
-    }
-
-    @Test
     void shouldMoveElevatorToProperFloor() {
         // when
-        elevatorService.pickup(4);
+        elevatorService.pickup(0, 4);
         List<Elevator> returnedElevators = elevatorService.status();
         elevatorService.step();
 

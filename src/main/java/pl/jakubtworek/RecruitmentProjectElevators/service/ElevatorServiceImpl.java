@@ -13,22 +13,25 @@ public class ElevatorServiceImpl implements ElevatorService{
     private final ElevatorDAO elevatorDAO;
 
     @Override
-    public void pickup(int destinationFloor) {
-
-    }
-
-    @Override
-    public Elevator update(int id, int numberOfFloor, int destinationFloor) {
-        return null;
+    public void pickup(int sourceFloor, int destinationFloor) {
+        Elevator elevator = elevatorDAO.findElevatorNotMoving().orElse(null);
+        elevator.getPlannedFloors().add(destinationFloor);
+        elevator.setMovingUp(true);
     }
 
     @Override
     public void step() {
-
+        List<Elevator> elevators = elevatorDAO.findElevatorToMove();
+        for(Elevator elevator : elevators){
+            elevator.setNumberOfFloor(elevator.getPlannedFloors().poll());
+            elevator.setMovingUp(false);
+            elevator.getPlannedFloors().add(0);
+            elevator.setMovingDown(true);
+        }
     }
 
     @Override
     public List<Elevator> status() {
-        return null;
+        return elevatorDAO.findAll();
     }
 }

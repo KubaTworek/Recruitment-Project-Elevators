@@ -1,24 +1,60 @@
 package pl.jakubtworek.RecruitmentProjectElevators.service;
 
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import pl.jakubtworek.RecruitmentProjectElevators.data.*;
+import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest
 public class ElevatorServiceIT {
+    @Mock
+    private Elevators elevators;
+
     @Autowired
     private ElevatorService elevatorService;
 
-    void pickup() {
-
+    @BeforeEach
+    void setup() {
+        ElevatorsTest elevatorsTest = new ElevatorsTest();
+        when(elevators.getElevators()).thenReturn(elevatorsTest.getElevators());
     }
 
-    void update() {
+    @Test
+    void shouldReturnPickedElevator() {
+        // when
+        elevatorService.pickup(0, 4);
+        List<Elevator> returnedElevators = elevatorService.status();
 
+        // then
+        assertEquals(0, returnedElevators.get(0).getNumberOfFloor());
+        assertEquals(4, returnedElevators.get(0).getPlannedFloors().peek());
     }
 
-    void step() {
+    @Test
+    void shouldMoveElevatorToProperFloor() {
+        // when
+        elevatorService.pickup(0, 4);
+        List<Elevator> returnedElevators = elevatorService.status();
+        elevatorService.step();
 
+        // then
+        assertEquals(4, returnedElevators.get(0).getNumberOfFloor());
+        assertEquals(1, returnedElevators.get(0).getPlannedFloors().size());
     }
 
-    void status() {
+    @Test
+    void shouldReturnAllElevators() {
+        // when
+        List<Elevator> returnedElevators = elevatorService.status();
 
+        // then
+        assertEquals(16, returnedElevators.size());
     }
 }

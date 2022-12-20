@@ -5,6 +5,7 @@ import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class ElevatorDAOImpl implements ElevatorDAO{
@@ -21,5 +22,20 @@ public class ElevatorDAOImpl implements ElevatorDAO{
                 .stream()
                 .filter(e -> e.getId() == id)
                 .findFirst();
+    }
+
+    @Override
+    public Optional<Elevator> findElevatorNotMoving() {
+        return elevators.getElevators().stream()
+                .filter(e -> !e.isMovingDown())
+                .filter(e -> !e.isMovingUp())
+                .findFirst();
+    }
+
+    @Override
+    public List<Elevator> findElevatorToMove() {
+        return elevators.getElevators().stream()
+                .filter(e -> e.getPlannedFloors().size() != 0)
+                .collect(Collectors.toList());
     }
 }

@@ -7,4 +7,6 @@ import java.util.*;
 public interface ElevatorDAO {
     List<Elevator> findAll();
     Optional<Elevator> findById(int id);
+    Optional<Elevator> findElevatorNotMoving();
+    List<Elevator> findElevatorToMove();
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class ElevatorDAOImpl implements ElevatorDAO{
+public class ElevatorDAOImpl implements ElevatorDAO {
     private final Elevators elevators;
 
     @Override
@@ -21,7 +21,7 @@ public class ElevatorDAOImpl implements ElevatorDAO{
                     e.setNumberOfFloor(actualFloor);
                     e.setMovingUp(isMovingUp);
                     e.setMovingDown(isMovingDown);
-                    if(floorDestination != null) e.getPlannedFloors().add(floorDestination);
+                    if (floorDestination != null) e.getPlannedFloors().add(floorDestination);
                     return e;
                 })
                 .findFirst()

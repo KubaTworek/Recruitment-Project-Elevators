@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ElevatorServiceImpl implements ElevatorService{
+public class ElevatorServiceImpl implements ElevatorService {
     private final ElevatorDAO elevatorDAO;
 
     @Override
@@ -27,8 +27,8 @@ public class ElevatorServiceImpl implements ElevatorService{
     @Override
     public void step() {
         List<Elevator> elevators = elevatorDAO.findElevatorToMove();
-        for(Elevator elevator : elevators){
-            if(elevator.isMovingDown()){
+        for (Elevator elevator : elevators) {
+            if (elevator.isMovingDown()) {
                 elevatorDAO.update(
                         elevator.getId(),
                         elevator.getPlannedFloors().poll(),

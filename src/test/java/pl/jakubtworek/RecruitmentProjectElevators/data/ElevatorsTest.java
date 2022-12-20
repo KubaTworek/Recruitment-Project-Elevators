@@ -8,12 +8,13 @@ public class ElevatorsTest {
     private final List<Elevator> elevators = new ArrayList<>();
     private final List<Elevator> elevatorsToMove = new ArrayList<>();
 
-    public ElevatorsTest() {}
+    public ElevatorsTest() {
+    }
 
     public List<Elevator> getElevators() {
-        for(int i = 0; i < 16; i++){
+        for (int i = 0; i < 16; i++) {
             elevators.add(new Elevator(
-                    i+1,
+                    i + 1,
                     0
             ));
         }
@@ -21,12 +22,12 @@ public class ElevatorsTest {
     }
 
     public List<Elevator> getElevatorsToMove() {
-        for(int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             elevatorsToMove.add(new Elevator(
-                    i+1,
+                    i + 1,
                     0
             ));
-            elevatorsToMove.get(i).getPlannedFloors().add(i+1);
+            elevatorsToMove.get(i).getPlannedFloors().add(i + 1);
             elevatorsToMove.get(i).setMovingUp(true);
         }
         return elevatorsToMove;

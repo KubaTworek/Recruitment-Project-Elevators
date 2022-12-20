@@ -2,18 +2,15 @@ package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import pl.jakubtworek.RecruitmentProjectElevators.data.*;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
-import java.util.*;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ElevatorDAOTest {
-
+class ElevatorDAOTest {
     @Mock
     private Elevators elevators;
 
@@ -33,7 +30,6 @@ public class ElevatorDAOTest {
 
     @Test
     void shouldReturnUpdatedElevator() {
-        elevatorDAO.findAll().stream().forEach(System.out::println);
         // when
         Elevator updatedElevator = elevatorDAO.update(1, 1, 5, false, true);
 
@@ -47,13 +43,12 @@ public class ElevatorDAOTest {
 
     @Test
     void shouldReturnAllElevators() {
-        elevatorDAO.findAll().stream().forEach(System.out::println);
         // when
         List<Elevator> returnedElevators = elevatorDAO.findAll();
 
         // then
         for (int i = 0; i < 16; i++) {
-            assertEquals(i+1, returnedElevators.get(i).getId());
+            assertEquals(i + 1, returnedElevators.get(i).getId());
             assertEquals(0, returnedElevators.get(i).getNumberOfFloor());
             assertEquals(0, returnedElevators.get(i).getPlannedFloors().size());
             assertFalse(returnedElevators.get(i).isMovingDown());
@@ -63,7 +58,6 @@ public class ElevatorDAOTest {
 
     @Test
     void shouldReturnElevatorById() {
-        elevatorDAO.findAll().stream().forEach(System.out::println);
         // when
         Elevator returnedElevator = elevatorDAO.findById(1).orElse(null);
 
@@ -77,7 +71,6 @@ public class ElevatorDAOTest {
 
     @Test
     void shouldReturnNotMovingElevator() {
-        elevatorDAO.findAll().stream().forEach(System.out::println);
         // when
         Elevator returnedElevator = elevatorDAO.findElevatorNotMoving().orElse(null);
 

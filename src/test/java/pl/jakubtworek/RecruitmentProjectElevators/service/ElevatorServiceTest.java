@@ -2,18 +2,14 @@ package pl.jakubtworek.RecruitmentProjectElevators.service;
 
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import pl.jakubtworek.RecruitmentProjectElevators.controller.*;
 import pl.jakubtworek.RecruitmentProjectElevators.data.ElevatorsTest;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
-import java.util.*;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class ElevatorServiceTest {
+class ElevatorServiceTest {
     @Mock
     private ElevatorDAO elevatorDAO;
 
@@ -36,7 +32,7 @@ public class ElevatorServiceTest {
     }
 
     @Test
-    void shouldReturnPickedElevator() {
+    void verifyInvokingMethods_whenPickup() {
         // when
         elevatorService.pickup(0, 4);
 
@@ -46,7 +42,7 @@ public class ElevatorServiceTest {
     }
 
     @Test
-    void shouldMoveElevatorToProperFloor() {
+    void verifyInvokingMethods_whenStep() {
         // when
         elevatorService.step();
 
@@ -56,7 +52,7 @@ public class ElevatorServiceTest {
     }
 
     @Test
-    void shouldReturnAllElevators() {
+    void verifyInvokingMethods_whenStatus() {
         // when
         elevatorService.status();
 

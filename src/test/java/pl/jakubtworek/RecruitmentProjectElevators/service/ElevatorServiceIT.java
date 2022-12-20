@@ -7,13 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import pl.jakubtworek.RecruitmentProjectElevators.data.*;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
-import java.util.*;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class ElevatorServiceIT {
+class ElevatorServiceIT {
     @Mock
     private Elevators elevators;
 

@@ -1,19 +1,31 @@
 package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import pl.jakubtworek.RecruitmentProjectElevators.data.*;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class ElevatorDAOIT {
+public class ElevatorDAOTest {
+
+    @Mock
+    private Elevators elevators;
 
     @Autowired
     private ElevatorDAO elevatorDAO;
+
+    @BeforeEach
+    void setup() {
+        ElevatorsTest elevatorsTest = new ElevatorsTest();
+        when(elevators.getElevators()).thenReturn(elevatorsTest.getElevators());
+    }
 
     @Test
     void shouldReturnAllElevators() {

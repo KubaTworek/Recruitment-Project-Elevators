@@ -16,14 +16,18 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator update(int id, int actualFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp) {
+    public Elevator update(int id, int actualFloor, int userFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp) {
         Elevator elevator = elevators.getElevators().stream()
                 .filter(e -> e.getId() == id)
                 .map(e -> {
                     e.setNumberOfFloor(actualFloor);
                     e.setMovingUp(isMovingUp);
                     e.setMovingDown(isMovingDown);
-                    if (floorDestination != null) e.getPlannedFloors().add(floorDestination);
+                    if (floorDestination != null && actualFloor == userFloor) e.getPlannedFloors().add(floorDestination);
+                    if (floorDestination != null && actualFloor != userFloor) {
+                        e.getPlannedFloors().add(userFloor);
+                        e.getPlannedFloors().add(floorDestination);
+                    }
                     return e;
                 })
                 .findFirst()

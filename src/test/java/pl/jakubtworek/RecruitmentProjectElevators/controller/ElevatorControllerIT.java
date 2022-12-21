@@ -27,7 +27,7 @@ public class ElevatorControllerIT {
         when(elevatorDAO.findElevatorToMove()).thenReturn(elevatorsTest.getElevatorsToMove());
         when(elevatorDAO.findElevatorNotMoving()).thenReturn(Optional.ofNullable(elevatorsTest.getElevators().get(0)));
         when(elevatorDAO.findById(anyInt())).thenReturn(Optional.ofNullable(elevatorsTest.getElevators().get(0)));
-        when(elevatorDAO.update(anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean())).thenReturn(elevatorsTest.getElevators().get(0));
+        when(elevatorDAO.update(anyInt(), anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean())).thenReturn(elevatorsTest.getElevators().get(0));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ElevatorControllerIT {
 
         // then
         verify(elevatorDAO).findElevatorNotMoving();
-        verify(elevatorDAO).update(1, 0, 4, false, true);
+        verify(elevatorDAO).update(1, 0, 0, 4, false, true);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ElevatorControllerIT {
 
         // then
         verify(elevatorDAO).findElevatorToMove();
-        verify(elevatorDAO, times(2)).update(anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean());
+        verify(elevatorDAO, times(2)).update(anyInt(), anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean());
     }
 
     @Test

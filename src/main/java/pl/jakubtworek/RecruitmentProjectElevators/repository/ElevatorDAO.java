@@ -5,7 +5,7 @@ import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import java.util.*;
 
 public interface ElevatorDAO {
-    Elevator update(int id, int actualFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp);
+    Elevator update(int id, int actualFloor, int userFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp);
 
     List<Elevator> findAll();
 

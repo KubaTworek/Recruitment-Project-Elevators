@@ -16,17 +16,20 @@ public class ElevatorController {
         this.elevatorService = elevatorService;
     }
 
+    @CrossOrigin
     @PostMapping("/pickup")
     public void pickup(@RequestParam int sourceFloor,
                        @RequestParam int destinationFloor) {
         elevatorService.pickup(sourceFloor, destinationFloor);
     }
 
+    @CrossOrigin
     @PutMapping("/step")
     public void step() {
         elevatorService.step();
     }
 
+    @CrossOrigin
     @GetMapping
     public ResponseEntity<List<ElevatorResponse>> status() {
         List<ElevatorResponse> response = elevatorService.status()

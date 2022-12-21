@@ -20,6 +20,7 @@ public class ElevatorServiceImpl implements ElevatorService {
         elevatorDAO.update(
                 elevator.getId(),
                 elevator.getNumberOfFloor(),
+                sourceFloor,
                 destinationFloor,
                 false,
                 true
@@ -34,17 +35,32 @@ public class ElevatorServiceImpl implements ElevatorService {
                 elevatorDAO.update(
                         elevator.getId(),
                         elevator.getPlannedFloors().poll(),
+                        0,
                         null,
                         false,
                         false
                 );
-            } else {
+            } else if (elevator.getPlannedFloors().size() == 1){
+                int elevatorFloor = elevator.getPlannedFloors().poll();
+                int userFloor = elevatorFloor;
                 elevatorDAO.update(
                         elevator.getId(),
-                        elevator.getPlannedFloors().poll(),
+                        0,
+                        0,
                         0,
                         true,
                         false
+                );
+            } else {
+                int elevatorFloor = elevator.getPlannedFloors().poll();
+                int userFloor = elevator.getPlannedFloors().poll();
+                elevatorDAO.update(
+                        elevator.getId(),
+                        elevatorFloor,
+                        userFloor,
+                        userFloor,
+                        false,
+                        true
                 );
             }
         }

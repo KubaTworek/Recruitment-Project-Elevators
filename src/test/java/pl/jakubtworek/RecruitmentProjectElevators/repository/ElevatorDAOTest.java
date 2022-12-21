@@ -31,7 +31,7 @@ class ElevatorDAOTest {
     @Test
     void shouldReturnUpdatedElevator() {
         // when
-        Elevator updatedElevator = elevatorDAO.update(1, 1, 5, false, true);
+        Elevator updatedElevator = elevatorDAO.update(1, 1, 1, 5, false, true);
 
         // then
         assertEquals(1, updatedElevator.getId());

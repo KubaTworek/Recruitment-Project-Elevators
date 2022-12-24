@@ -7,7 +7,7 @@ public class Elevator {
     private int numberOfFloor;
     private boolean isMovingUp;
     private boolean isMovingDown;
-    private final Queue<Integer> plannedFloors;
+    private final Queue<Floor> plannedFloors;
 
     public Elevator(int id, int numberOfFloor) {
         this.id = id;
@@ -28,7 +28,7 @@ public class Elevator {
             return ElevatorResponse.builder()
                     .id(id)
                     .numberOfFloor(numberOfFloor)
-                    .numberOfClosestDestination(plannedFloors.peek())
+                    .numberOfClosestDestination(plannedFloors.peek().getNumberOfFloor())
                     .build();
         }
     }
@@ -49,7 +49,7 @@ public class Elevator {
         return this.isMovingDown;
     }
 
-    public Queue<Integer> getPlannedFloors() {
+    public Queue<Floor> getPlannedFloors() {
         return this.plannedFloors;
     }
 

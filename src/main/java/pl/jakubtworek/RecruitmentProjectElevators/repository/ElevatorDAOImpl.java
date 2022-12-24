@@ -3,6 +3,7 @@ package pl.jakubtworek.RecruitmentProjectElevators.repository;
 import org.springframework.stereotype.Repository;
 import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
+import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,14 +17,15 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator update(int id, int actualFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp) {
+    public Elevator update(int id, int actualFloor, Integer floorDestination, boolean isMovingDown, boolean isMovingUp, boolean isDestination) {
         Elevator elevator = elevators.getElevators().stream()
                 .filter(e -> e.getId() == id)
                 .map(e -> {
+                    Floor.TypeOfTarget type = (isDestination) ? Floor.TypeOfTarget.DESTINATION : Floor.TypeOfTarget.USER;
                     e.setNumberOfFloor(actualFloor);
                     e.setMovingUp(isMovingUp);
                     e.setMovingDown(isMovingDown);
-                    if (floorDestination != null) e.getPlannedFloors().add(floorDestination);
+                    if (floorDestination != null) e.getPlannedFloors().add(new Floor(floorDestination, type));
                     return e;
                 })
                 .findFirst()

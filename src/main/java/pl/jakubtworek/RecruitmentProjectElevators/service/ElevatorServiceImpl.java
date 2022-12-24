@@ -2,6 +2,7 @@ package pl.jakubtworek.RecruitmentProjectElevators.service;
 
 import org.springframework.stereotype.Service;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
+import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
 import java.util.List;
@@ -20,14 +21,14 @@ public class ElevatorServiceImpl implements ElevatorService {
     public void pickup(int userFloor, int destinationFloor) {
         // TODO: find closest elevator, going up
         Elevator elevator = elevatorDAO.findElevatorNotMoving().orElse(null);
-        elevator.getPlannedFloors().forEach(System.out::println);
         if(userFloor != elevator.getNumberOfFloor()) {
             elevatorDAO.update(
                     elevator.getId(),
                     elevator.getNumberOfFloor(),
                     userFloor,
                     false,
-                    true
+                    true,
+                    false
             );
         }
         elevatorDAO.update(
@@ -35,6 +36,7 @@ public class ElevatorServiceImpl implements ElevatorService {
                 elevator.getNumberOfFloor(),
                 destinationFloor,
                 false,
+                true,
                 true
         );
     }
@@ -46,21 +48,29 @@ public class ElevatorServiceImpl implements ElevatorService {
             if (elevator.isMovingDown()) {
                 elevatorDAO.update(
                         elevator.getId(),
-                        elevator.getPlannedFloors().poll(),
+                        elevator.getPlannedFloors().poll().getNumberOfFloor(),
                         null,
                         false,
-                        false
+                        false,
+                        true
                 );
             } else {
-                int newFloor = elevator.getPlannedFloors().poll();
-                int destination = (elevator.getPlannedFloors().size() > 0) ? elevator.getPlannedFloors().poll() : 0;
+                boolean isDestination = true;
+                int newFloor = elevator.getPlannedFloors().poll().getNumberOfFloor();
+                if (elevator.getPlannedFloors().peek() != null){
+                    if (elevator.getPlannedFloors().peek().getTypeOfTarget() == Floor.TypeOfTarget.USER){
+                        isDestination = false;
+                    }
+                }
+                int destination = (elevator.getPlannedFloors().size() > 0) ? elevator.getPlannedFloors().poll().getNumberOfFloor() : 0;
                 boolean isMovingUp = destination != 0;
                 elevatorDAO.update(
                         elevator.getId(),
                         newFloor,
                         destination,
                         !isMovingUp,
-                        isMovingUp
+                        isMovingUp,
+                        isDestination
                 );
             }
         }

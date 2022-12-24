@@ -14,7 +14,7 @@ public class Elevator {
         this.numberOfFloor = numberOfFloor;
         this.isMovingUp = false;
         this.isMovingDown = false;
-        this.plannedFloors = new PriorityQueue<>();
+        this.plannedFloors = new PriorityQueue<>(new FloorComparator());
     }
 
     public ElevatorResponse convertToResponse() {

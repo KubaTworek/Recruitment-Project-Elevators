@@ -6,11 +6,11 @@ import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import java.util.List;
 
 public interface ElevatorService {
-    void update(int id, int floor) throws ElevatorNotFoundException;
+    Elevator update(int id, int floor) throws ElevatorNotFoundException;
 
-    void pickup(int sourceFloor, int destinationFloor) throws ElevatorNotFoundException;
+    Elevator pickup(int sourceFloor, int destinationFloor) throws ElevatorNotFoundException;
 
-    void step() throws ElevatorNotFoundException;
+    List<Elevator> step() throws ElevatorNotFoundException;
 
     List<Elevator> status();
 }

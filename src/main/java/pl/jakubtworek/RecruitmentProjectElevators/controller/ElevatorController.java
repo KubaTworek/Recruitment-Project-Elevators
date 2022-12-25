@@ -10,6 +10,7 @@ import pl.jakubtworek.RecruitmentProjectElevators.model.ElevatorResponse;
 import pl.jakubtworek.RecruitmentProjectElevators.service.ElevatorService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/elevators")
@@ -22,27 +23,40 @@ public class ElevatorController {
 
     @CrossOrigin
     @PostMapping("/update/{id}")
-    public void update(@PathVariable int id,
+    public ResponseEntity<ElevatorResponse> update(@PathVariable int id,
                        @RequestParam int floor) throws ElevatorNotFoundException, FloorNotFoundException {
-        if (floor < 1 || floor > 9) throw new FloorNotFoundException("There are only 10 floors");
+        if (floor < 0 || floor > 9) throw new FloorNotFoundException("There are only 10 floors");
 
-        elevatorService.update(id, floor);
+        ElevatorResponse response = elevatorService.update(id, floor).convertToResponse();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @CrossOrigin
     @PostMapping("/pickup")
-    public void pickup(@RequestParam int sourceFloor,
-                       @RequestParam int destinationFloor) throws ElevatorNotFoundException, FloorNotFoundException {
-        if (sourceFloor < 1 || sourceFloor > 9) throw new FloorNotFoundException("There are only 10 floors");
-        if (destinationFloor < 1 || destinationFloor > 9) throw new FloorNotFoundException("There are only 10 floors");
+    public ResponseEntity<ElevatorResponse> pickup(@RequestParam int sourceFloor,
+                                                   @RequestParam int destinationFloor)
+            throws ElevatorNotFoundException, FloorNotFoundException {
 
-        elevatorService.pickup(sourceFloor, destinationFloor);
+        if (sourceFloor < 0 || sourceFloor > 9) throw new FloorNotFoundException("There are only 10 floors");
+        if (destinationFloor < 0 || destinationFloor > 9) throw new FloorNotFoundException("There are only 10 floors");
+
+        ElevatorResponse response = elevatorService.pickup(sourceFloor, destinationFloor).convertToResponse();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @CrossOrigin
     @PutMapping("/step")
-    public void step() throws ElevatorNotFoundException {
-        elevatorService.step();
+    public ResponseEntity<List<ElevatorResponse>> step() throws ElevatorNotFoundException {
+        List<ElevatorResponse> response =  elevatorService.step()
+                .stream()
+                .map(Elevator::convertToResponse)
+                .collect(Collectors.toList());
+
+        if(response.isEmpty()) throw new ElevatorNotFoundException("There are not elevators to move");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -52,6 +66,7 @@ public class ElevatorController {
                 .stream()
                 .map(Elevator::convertToResponse)
                 .toList();
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -19,12 +19,12 @@ public class ElevatorServiceImpl implements ElevatorService {
     }
 
     @Override
-    public void update(int id, int floor) throws ElevatorNotFoundException {
-        elevatorDAO.update(id, floor);
+    public Elevator update(int id, int floor) throws ElevatorNotFoundException {
+        return elevatorDAO.update(id, floor);
     }
 
     @Override
-    public void pickup(int userFloor, int destinationFloor) throws ElevatorNotFoundException {
+    public Elevator pickup(int userFloor, int destinationFloor) throws ElevatorNotFoundException {
         Elevator elevator = getProperElevator(userFloor, destinationFloor);
         int id = elevator.getId();
 
@@ -41,10 +41,12 @@ public class ElevatorServiceImpl implements ElevatorService {
                 destinationFloor,
                 false
         );
+
+        return elevator;
     }
 
     @Override
-    public void step() throws ElevatorNotFoundException {
+    public List<Elevator> step() throws ElevatorNotFoundException {
         List<Elevator> elevators = elevatorDAO.findElevatorToMove();
 
         for (Elevator elevator : elevators) {
@@ -54,6 +56,8 @@ public class ElevatorServiceImpl implements ElevatorService {
                     elevatorId
             );
         }
+
+        return elevators;
     }
 
     @Override

@@ -24,7 +24,9 @@ public class ElevatorController {
     @CrossOrigin
     @PostMapping("/update/{id}")
     public ResponseEntity<ElevatorResponse> update(@PathVariable int id,
-                       @RequestParam int floor) throws ElevatorNotFoundException, FloorNotFoundException {
+                                                   @RequestParam int floor)
+            throws ElevatorNotFoundException, FloorNotFoundException {
+
         if (floor < 0 || floor > 9) throw new FloorNotFoundException("There are only 10 floors");
 
         ElevatorResponse response = elevatorService.update(id, floor).convertToResponse();
@@ -49,12 +51,12 @@ public class ElevatorController {
     @CrossOrigin
     @PutMapping("/step")
     public ResponseEntity<List<ElevatorResponse>> step() throws ElevatorNotFoundException {
-        List<ElevatorResponse> response =  elevatorService.step()
+        List<ElevatorResponse> response = elevatorService.step()
                 .stream()
                 .map(Elevator::convertToResponse)
                 .collect(Collectors.toList());
 
-        if(response.isEmpty()) throw new ElevatorNotFoundException("There are not elevators to move");
+        if (response.isEmpty()) throw new ElevatorNotFoundException("There are not elevators to move");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

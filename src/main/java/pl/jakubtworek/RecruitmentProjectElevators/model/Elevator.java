@@ -5,8 +5,8 @@ import java.util.Queue;
 
 public class Elevator {
     private final int id;
-    private int numberOfFloor;
     private final Queue<Floor> plannedFloors;
+    private int numberOfFloor;
 
     public Elevator(int id, int numberOfFloor) {
         this.id = id;
@@ -36,11 +36,11 @@ public class Elevator {
         return this.numberOfFloor;
     }
 
-    public Queue<Floor> getPlannedFloors() {
-        return this.plannedFloors;
-    }
-
     public void setNumberOfFloor(int numberOfFloor) {
         this.numberOfFloor = numberOfFloor;
+    }
+
+    public Queue<Floor> getPlannedFloors() {
+        return this.plannedFloors;
     }
 }

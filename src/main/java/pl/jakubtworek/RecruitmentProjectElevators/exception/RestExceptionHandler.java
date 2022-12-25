@@ -1,15 +1,9 @@
 package pl.jakubtworek.RecruitmentProjectElevators.exception;
 
-import org.springframework.http.*;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.*;
-import java.util.*;
-
-import static java.util.stream.Collectors.toMap;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class RestExceptionHandler {

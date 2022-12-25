@@ -28,14 +28,13 @@ public class ElevatorServiceImpl implements ElevatorService {
         Elevator elevator = getProperElevator(userFloor, destinationFloor);
         int id = elevator.getId();
 
-        if (userFloor != elevator.getNumberOfFloor()) {
+        if (isMoveToUserFloor(elevator, userFloor)) {
             elevatorDAO.update(
                     id,
                     userFloor,
                     true
             );
         }
-
         elevatorDAO.update(
                 id,
                 destinationFloor,
@@ -66,27 +65,32 @@ public class ElevatorServiceImpl implements ElevatorService {
     }
 
     private Elevator getProperElevator(int userFloor, int destination) throws ElevatorNotFoundException {
-        return getElevatorMovingInTheSameDirection(userFloor, destination)
+        return getMostApplicableElevator(userFloor, destination)
                 .orElse(getNearestElevator(userFloor)
                         .orElseThrow(() -> new ElevatorNotFoundException("There are not available elevator")));
     }
 
-    private Optional<Elevator> getElevatorMovingInTheSameDirection(int userFloor, int destination) {
+    private Optional<Elevator> getMostApplicableElevator(int userFloor, int destination) {
         return elevatorDAO.findAll().stream()
-                .filter(e -> e.getPlannedFloors().peek() != null)
+                .filter(e -> !e.getPlannedFloors().isEmpty())
                 .filter(e -> isElevatorsMoveInSameDirection(e, userFloor, destination))
-                .findFirst();
+                .filter(e -> isUserFloorIsBetweenDestinationsOfElevator(e, userFloor))
+                .min(comparingInt(o -> Math.abs(o.getNumberOfFloor() - userFloor)));
     }
 
     private Optional<Elevator> getNearestElevator(int userFloor) {
         return elevatorDAO.findAll().stream()
-                .filter(e -> e.getPlannedFloors().isEmpty())
-                .min(comparingInt(o -> Math.abs(o.getNumberOfFloor() - userFloor)));
+                .min(comparingInt(e -> Math.abs(e.getNumberOfFloor() - userFloor)));
     }
 
     private boolean isElevatorsMoveInSameDirection(Elevator e, int sourceFloor, int destinationFloor) {
         return isElevatorsComingUp(e, sourceFloor, destinationFloor)
                 || !isElevatorsComingUp(e, sourceFloor, destinationFloor);
+    }
+
+    private boolean isUserFloorIsBetweenDestinationsOfElevator(Elevator e, int sourceFloor) {
+        return (sourceFloor < e.getNumberOfFloor() && sourceFloor > e.getPlannedFloors().peek().numberOfFloor())
+                || (sourceFloor > e.getNumberOfFloor() && sourceFloor < e.getPlannedFloors().peek().numberOfFloor());
     }
 
     private boolean isElevatorsComingUp(Elevator e, int sourceFloor, int destinationFloor) {
@@ -96,5 +100,9 @@ public class ElevatorServiceImpl implements ElevatorService {
 
     private boolean isElevatorComingUp(int sourceFloor, int destinationFloor) {
         return destinationFloor - sourceFloor > 0;
+    }
+
+    private boolean isMoveToUserFloor(Elevator elevator, int userFloor) {
+        return elevator.getNumberOfFloor() != userFloor;
     }
 }

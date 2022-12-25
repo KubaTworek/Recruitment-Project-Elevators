@@ -19,6 +19,13 @@ public class ElevatorController {
     }
 
     @CrossOrigin
+    @PostMapping("/update/{id}")
+    public void update(@PathVariable int id,
+                       @RequestParam int floor) {
+        elevatorService.update(id, floor);
+    }
+
+    @CrossOrigin
     @PostMapping("/pickup")
     public void pickup(@RequestParam int sourceFloor,
                        @RequestParam int destinationFloor) {

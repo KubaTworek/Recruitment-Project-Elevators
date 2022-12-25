@@ -29,6 +29,16 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
+    public Elevator update(int id, int floor) {
+        Elevator elevator = findById(id).orElse(null);
+
+        elevator.setNumberOfFloor(floor);
+        elevator.getPlannedFloors().clear();
+
+        return elevator;
+    }
+
+    @Override
     public Elevator update(int id) {
         Elevator elevator = findById(id).orElse(null);
 

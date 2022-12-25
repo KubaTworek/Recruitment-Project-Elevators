@@ -18,6 +18,11 @@ public class ElevatorServiceImpl implements ElevatorService {
     }
 
     @Override
+    public void update(int id, int floor) {
+        elevatorDAO.update(id, floor);
+    }
+
+    @Override
     public void pickup(int userFloor, int destinationFloor) {
         Elevator elevator = getProperElevator(userFloor, destinationFloor);
         int id = elevator.getId();

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ElevatorDAO {
     Elevator update(int id, Integer floorDestination, boolean isUserFloor);
+    Elevator update(int id, int floorDestination);
 
     Elevator update(int id);
 

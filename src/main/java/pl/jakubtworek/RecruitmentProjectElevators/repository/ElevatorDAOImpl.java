@@ -3,6 +3,7 @@ package pl.jakubtworek.RecruitmentProjectElevators.repository;
 import org.springframework.stereotype.Repository;
 import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
 import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
+import pl.jakubtworek.RecruitmentProjectElevators.factories.ElevatorFactory;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
 import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ElevatorDAOImpl implements ElevatorDAO {
+    private final ElevatorFactory elevatorFactory;
     private final Elevators elevators;
 
-    public ElevatorDAOImpl(Elevators elevators) {
+    public ElevatorDAOImpl(ElevatorFactory elevatorFactory, Elevators elevators) {
+        this.elevatorFactory = elevatorFactory;
         this.elevators = elevators;
     }
 
@@ -25,9 +28,7 @@ public class ElevatorDAOImpl implements ElevatorDAO {
         Elevator elevator = findById(id)
                 .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
 
-        addNextFloor(isUserFloor, floorDestination, elevator);
-
-        return elevator;
+        return elevatorFactory.create(floorDestination, isUserFloor).updateElevator(elevator);
     }
 
     @Override
@@ -35,10 +36,7 @@ public class ElevatorDAOImpl implements ElevatorDAO {
         Elevator elevator = findById(id)
                 .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
 
-        elevator.setNumberOfFloor(floor);
-        elevator.getPlannedFloors().clear();
-
-        return elevator;
+        return elevatorFactory.create(floor).updateElevator(elevator);
     }
 
     @Override
@@ -46,19 +44,7 @@ public class ElevatorDAOImpl implements ElevatorDAO {
         Elevator elevator = findById(id)
                 .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
 
-        boolean isUserFloor = false;
-        Integer floorDestination = null;
-        int newFloor = elevator.getPlannedFloors().poll().numberOfFloor();
-        if (elevator.getPlannedFloors().size() > 0) {
-            Floor floor = elevator.getPlannedFloors().poll();
-            isUserFloor = floor.typeOfTarget() == TypeOfTarget.USER;
-            floorDestination = floor.numberOfFloor();
-        }
-
-        elevator.setNumberOfFloor(newFloor);
-        addNextFloor(isUserFloor, floorDestination, elevator);
-
-        return elevator;
+        return elevatorFactory.create().updateElevator(elevator);
     }
 
     @Override
@@ -79,20 +65,5 @@ public class ElevatorDAOImpl implements ElevatorDAO {
         return elevators.getElevators().stream()
                 .filter(e -> e.getPlannedFloors().size() != 0)
                 .collect(Collectors.toList());
-    }
-
-    private void addNextFloor(boolean isUserFloor, Integer floorDestination, Elevator elevator) {
-        TypeOfTarget type = (isUserFloor) ? TypeOfTarget.USER : TypeOfTarget.DESTINATION;
-        if (isApplicableNewDestinationForElevator(floorDestination, elevator)) {
-            elevator.getPlannedFloors().add(new Floor(floorDestination, type));
-        }
-    }
-
-    private boolean isApplicableNewDestinationForElevator(Integer floorDestination, Elevator elevator) {
-        return floorDestination != null && elevator.getPlannedFloors()
-                .stream()
-                .filter(e2 -> Objects.equals(e2.numberOfFloor(), floorDestination))
-                .toList()
-                .size() == 0;
     }
 }

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ElevatorDAO {
     Elevator update(int id, Integer floorDestination, boolean isUserFloor) throws ElevatorNotFoundException;
+
     Elevator update(int id, int floorDestination) throws ElevatorNotFoundException;
 
     Elevator update(int id) throws ElevatorNotFoundException;

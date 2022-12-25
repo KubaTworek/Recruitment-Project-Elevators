@@ -20,7 +20,8 @@ public class ElevatorServiceImpl implements ElevatorService {
     @Override
     public void pickup(int userFloor, int destinationFloor) {
         // TODO: find closest elevator, going up
-        Elevator elevator = elevatorDAO.findElevatorNotMoving().orElse(null);
+        Elevator elevator = elevatorDAO.findElevatorToMoveOnFloor(destinationFloor)
+                .orElse(elevatorDAO.findElevatorNotMoving().orElse(null));
         if(userFloor != elevator.getNumberOfFloor()) {
             elevatorDAO.update(
                     elevator.getId(),

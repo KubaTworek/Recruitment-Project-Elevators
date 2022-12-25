@@ -25,7 +25,7 @@ public class ElevatorDAOImpl implements ElevatorDAO {
                     e.setNumberOfFloor(actualFloor);
                     e.setMovingUp(isMovingUp);
                     e.setMovingDown(isMovingDown);
-                    if (floorDestination != null) e.getPlannedFloors().add(new Floor(floorDestination, type));
+                    if (floorDestination != null && e.getPlannedFloors().stream().filter(e2 -> e2.getNumberOfFloor() == floorDestination).toList().size() == 0) e.getPlannedFloors().add(new Floor(floorDestination, type));
                     return e;
                 })
                 .findFirst()
@@ -51,6 +51,13 @@ public class ElevatorDAOImpl implements ElevatorDAO {
         return elevators.getElevators().stream()
                 .filter(e -> !e.isMovingDown())
                 .filter(e -> !e.isMovingUp())
+                .findFirst();
+    }
+
+    @Override
+    public Optional<Elevator> findElevatorToMoveOnFloor(int destination) {
+        return elevators.getElevators().stream()
+                .filter(e -> e.getPlannedFloors().peek() != null && e.getPlannedFloors().peek().getNumberOfFloor() < destination)
                 .findFirst();
     }
 

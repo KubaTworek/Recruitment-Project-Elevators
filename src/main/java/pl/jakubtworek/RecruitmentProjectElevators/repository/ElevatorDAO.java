@@ -13,5 +13,7 @@ public interface ElevatorDAO {
 
     Optional<Elevator> findElevatorNotMoving();
 
+    Optional<Elevator> findElevatorToMoveOnFloor(int destination);
+
     List<Elevator> findElevatorToMove();
 }

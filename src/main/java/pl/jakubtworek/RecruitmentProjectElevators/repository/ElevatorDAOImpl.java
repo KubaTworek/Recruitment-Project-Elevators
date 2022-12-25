@@ -20,20 +20,31 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator update(int id, int actualFloor, Integer floorDestination, boolean isUserFloor) {
-        return elevators.getElevators().stream()
-                .filter(e -> e.getId() == id)
-                .peek(e -> {
-                    e.setNumberOfFloor(actualFloor);
+    public Elevator updateForPickup(int id, Integer floorDestination, boolean isUserFloor) {
+        Elevator elevator = findById(id).orElse(null);
 
-                    TypeOfTarget type = (isUserFloor) ? TypeOfTarget.USER : TypeOfTarget.DESTINATION;
-                    if (isApplicableNewDestinationForElevator(floorDestination, e)) {
-                        e.getPlannedFloors().add(new Floor(floorDestination, type));
-                    }
+        addNextFloor(isUserFloor, floorDestination, elevator);
 
-                })
-                .findFirst()
-                .orElse(null);
+        return elevator;
+    }
+
+    @Override
+    public Elevator updateForStep(int id) {
+        Elevator elevator = findById(id).orElse(null);
+
+        boolean isUserFloor = false;
+        Integer floorDestination = null;
+        int newFloor = elevator.getPlannedFloors().poll().numberOfFloor();
+        if (elevator.getPlannedFloors().size() > 0) {
+            Floor floor = elevator.getPlannedFloors().poll();
+            isUserFloor = floor.typeOfTarget() == TypeOfTarget.USER;
+            floorDestination = floor.numberOfFloor();
+        }
+
+        elevator.setNumberOfFloor(newFloor);
+        addNextFloor(isUserFloor, floorDestination, elevator);
+
+        return elevator;
     }
 
     @Override
@@ -54,6 +65,13 @@ public class ElevatorDAOImpl implements ElevatorDAO {
         return elevators.getElevators().stream()
                 .filter(e -> e.getPlannedFloors().size() != 0)
                 .collect(Collectors.toList());
+    }
+
+    private void addNextFloor(boolean isUserFloor, Integer floorDestination, Elevator elevator) {
+        TypeOfTarget type = (isUserFloor) ? TypeOfTarget.USER : TypeOfTarget.DESTINATION;
+        if (isApplicableNewDestinationForElevator(floorDestination, elevator)) {
+            elevator.getPlannedFloors().add(new Floor(floorDestination, type));
+        }
     }
 
     private boolean isApplicableNewDestinationForElevator(Integer floorDestination, Elevator elevator) {

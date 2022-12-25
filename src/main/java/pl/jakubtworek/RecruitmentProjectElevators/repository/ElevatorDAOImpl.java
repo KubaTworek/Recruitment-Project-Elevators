@@ -23,15 +23,14 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     public Elevator update(int id, int actualFloor, Integer floorDestination, boolean isUserFloor) {
         return elevators.getElevators().stream()
                 .filter(e -> e.getId() == id)
-                .map(e -> {
-                    TypeOfTarget type = (isUserFloor == true) ? TypeOfTarget.USER : TypeOfTarget.DESTINATION;
-
+                .peek(e -> {
                     e.setNumberOfFloor(actualFloor);
+
+                    TypeOfTarget type = (isUserFloor) ? TypeOfTarget.USER : TypeOfTarget.DESTINATION;
                     if (isApplicableNewDestinationForElevator(floorDestination, e)) {
                         e.getPlannedFloors().add(new Floor(floorDestination, type));
                     }
 
-                    return e;
                 })
                 .findFirst()
                 .orElse(null);

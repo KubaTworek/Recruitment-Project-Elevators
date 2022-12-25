@@ -7,6 +7,9 @@ import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Comparator.comparingInt;
 
 @Service
 public class ElevatorServiceImpl implements ElevatorService {
@@ -18,7 +21,7 @@ public class ElevatorServiceImpl implements ElevatorService {
 
     @Override
     public void pickup(int userFloor, int destinationFloor) {
-        Elevator elevator = getProperElevator(destinationFloor);
+        Elevator elevator = getProperElevator(userFloor, destinationFloor);
         int id = elevator.getId();
         int sourceFloor = elevator.getNumberOfFloor();
 
@@ -69,14 +72,36 @@ public class ElevatorServiceImpl implements ElevatorService {
         return elevatorDAO.findAll();
     }
 
-    private Elevator getProperElevator(int destination) {
+    private Elevator getProperElevator(int userFloor, int destination) {
+        return getElevatorMovingInTheSameDirection(userFloor, destination)
+                .orElse(getNearestElevator(userFloor)
+                        .orElse(null));
+    }
+
+    private Optional<Elevator> getElevatorMovingInTheSameDirection(int userFloor, int destination) {
         return elevatorDAO.findAll().stream()
                 .filter(e -> e.getPlannedFloors().peek() != null)
-                .filter(e -> e.getPlannedFloors().peek().numberOfFloor() < destination)
-                .findFirst()
-                .orElse(elevatorDAO.findAll().stream()
+                .filter(e -> isElevatorsMoveInSameDirection(e, userFloor, destination))
+                .findFirst();
+    }
+
+    private Optional<Elevator> getNearestElevator(int userFloor) {
+        return elevatorDAO.findAll().stream()
                         .filter(e -> e.getPlannedFloors().isEmpty())
-                        .findFirst()
-                        .orElse(null));
+                        .min(comparingInt(o -> Math.abs(o.getNumberOfFloor() - userFloor)));
+    }
+
+    private boolean isElevatorsMoveInSameDirection(Elevator e, int sourceFloor, int destinationFloor){
+        return isElevatorsComingUp(e, sourceFloor, destinationFloor)
+                || !isElevatorsComingUp(e, sourceFloor, destinationFloor);
+    }
+
+    private boolean isElevatorsComingUp(Elevator e, int sourceFloor, int destinationFloor){
+        return isElevatorComingUp(e.getNumberOfFloor(), e.getPlannedFloors().peek().numberOfFloor())
+                && isElevatorComingUp(sourceFloor, destinationFloor);
+    }
+
+    private boolean isElevatorComingUp(int sourceFloor, int destinationFloor){
+        return destinationFloor - sourceFloor > 0;
     }
 }

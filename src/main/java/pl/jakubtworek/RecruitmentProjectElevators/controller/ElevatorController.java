@@ -1,8 +1,10 @@
 package pl.jakubtworek.RecruitmentProjectElevators.controller;
 
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.jakubtworek.RecruitmentProjectElevators.model.*;
+import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
+import pl.jakubtworek.RecruitmentProjectElevators.model.ElevatorResponse;
 import pl.jakubtworek.RecruitmentProjectElevators.service.ElevatorService;
 
 import java.util.List;

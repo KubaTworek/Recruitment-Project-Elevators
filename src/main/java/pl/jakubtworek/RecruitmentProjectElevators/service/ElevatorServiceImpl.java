@@ -3,11 +3,10 @@ package pl.jakubtworek.RecruitmentProjectElevators.service;
 import org.springframework.stereotype.Service;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
+import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
 import java.util.List;
-
-// todo: comparator w queue
 
 @Service
 public class ElevatorServiceImpl implements ElevatorService {
@@ -19,66 +18,65 @@ public class ElevatorServiceImpl implements ElevatorService {
 
     @Override
     public void pickup(int userFloor, int destinationFloor) {
-        // TODO: find closest elevator, going up
-        Elevator elevator = elevatorDAO.findElevatorToMoveOnFloor(destinationFloor)
-                .orElse(elevatorDAO.findElevatorNotMoving().orElse(null));
-        if(userFloor != elevator.getNumberOfFloor()) {
+        Elevator elevator = getProperElevator(destinationFloor);
+        int id = elevator.getId();
+        int sourceFloor = elevator.getNumberOfFloor();
+
+        if (userFloor != elevator.getNumberOfFloor()) {
             elevatorDAO.update(
-                    elevator.getId(),
-                    elevator.getNumberOfFloor(),
+                    id,
+                    sourceFloor,
                     userFloor,
-                    false,
-                    true,
-                    false
+                    true
             );
         }
+
         elevatorDAO.update(
-                elevator.getId(),
-                elevator.getNumberOfFloor(),
+                id,
+                sourceFloor,
                 destinationFloor,
-                false,
-                true,
-                true
+                false
         );
     }
 
     @Override
     public void step() {
         List<Elevator> elevators = elevatorDAO.findElevatorToMove();
+
         for (Elevator elevator : elevators) {
-            if (elevator.isMovingDown()) {
-                elevatorDAO.update(
-                        elevator.getId(),
-                        elevator.getPlannedFloors().poll().getNumberOfFloor(),
-                        null,
-                        false,
-                        false,
-                        true
-                );
-            } else {
-                boolean isDestination = true;
-                int newFloor = elevator.getPlannedFloors().poll().getNumberOfFloor();
-                if (elevator.getPlannedFloors().peek() != null){
-                    if (elevator.getPlannedFloors().peek().getTypeOfTarget() == Floor.TypeOfTarget.USER){
-                        isDestination = false;
-                    }
-                }
-                int destination = (elevator.getPlannedFloors().size() > 0) ? elevator.getPlannedFloors().poll().getNumberOfFloor() : 0;
-                boolean isMovingUp = destination != 0;
-                elevatorDAO.update(
-                        elevator.getId(),
-                        newFloor,
-                        destination,
-                        !isMovingUp,
-                        isMovingUp,
-                        isDestination
-                );
+            int elevatorId = elevator.getId();
+            boolean isUserFloor = false;
+            Integer destination = null;
+            int newFloor = elevator.getPlannedFloors().poll().numberOfFloor();
+
+            if (elevator.getPlannedFloors().size() > 0) {
+                Floor floor = elevator.getPlannedFloors().poll();
+                isUserFloor = floor.typeOfTarget() == TypeOfTarget.USER;
+                destination = floor.numberOfFloor();
             }
+
+            elevatorDAO.update(
+                    elevatorId,
+                    newFloor,
+                    destination,
+                    isUserFloor
+            );
         }
     }
 
     @Override
     public List<Elevator> status() {
         return elevatorDAO.findAll();
+    }
+
+    private Elevator getProperElevator(int destination) {
+        return elevatorDAO.findAll().stream()
+                .filter(e -> e.getPlannedFloors().peek() != null)
+                .filter(e -> e.getPlannedFloors().peek().numberOfFloor() < destination)
+                .findFirst()
+                .orElse(elevatorDAO.findAll().stream()
+                        .filter(e -> e.getPlannedFloors().isEmpty())
+                        .findFirst()
+                        .orElse(null));
     }
 }

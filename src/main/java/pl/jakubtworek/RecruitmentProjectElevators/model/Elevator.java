@@ -1,36 +1,31 @@
 package pl.jakubtworek.RecruitmentProjectElevators.model;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class Elevator {
     private final int id;
     private int numberOfFloor;
-    private boolean isMovingUp;
-    private boolean isMovingDown;
     private final Queue<Floor> plannedFloors;
 
     public Elevator(int id, int numberOfFloor) {
         this.id = id;
         this.numberOfFloor = numberOfFloor;
-        this.isMovingUp = false;
-        this.isMovingDown = false;
         this.plannedFloors = new PriorityQueue<>(new FloorComparator());
     }
 
     public ElevatorResponse convertToResponse() {
-        if (this.getPlannedFloors().size() == 0) {
-            return ElevatorResponse.builder()
-                    .id(id)
-                    .numberOfFloor(numberOfFloor)
-                    .numberOfClosestDestination(null)
-                    .build();
-        } else {
-            return ElevatorResponse.builder()
-                    .id(id)
-                    .numberOfFloor(numberOfFloor)
-                    .numberOfClosestDestination(plannedFloors.peek().getNumberOfFloor())
-                    .build();
+        Floor destinationFloor = plannedFloors.peek();
+        Integer destination = null;
+        if (destinationFloor != null) {
+            destination = destinationFloor.numberOfFloor();
         }
+
+        return ElevatorResponse.builder()
+                .id(id)
+                .numberOfFloor(numberOfFloor)
+                .numberOfClosestDestination(destination)
+                .build();
     }
 
     public int getId() {
@@ -41,27 +36,11 @@ public class Elevator {
         return this.numberOfFloor;
     }
 
-    public boolean isMovingUp() {
-        return this.isMovingUp;
-    }
-
-    public boolean isMovingDown() {
-        return this.isMovingDown;
-    }
-
     public Queue<Floor> getPlannedFloors() {
         return this.plannedFloors;
     }
 
     public void setNumberOfFloor(int numberOfFloor) {
         this.numberOfFloor = numberOfFloor;
-    }
-
-    public void setMovingUp(boolean isMovingUp) {
-        this.isMovingUp = isMovingUp;
-    }
-
-    public void setMovingDown(boolean isMovingDown) {
-        this.isMovingDown = isMovingDown;
     }
 }

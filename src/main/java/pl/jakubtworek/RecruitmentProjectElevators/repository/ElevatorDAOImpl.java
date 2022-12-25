@@ -15,36 +15,10 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ElevatorDAOImpl implements ElevatorDAO {
-    private final ElevatorFactory elevatorFactory;
     private final Elevators elevators;
 
-    public ElevatorDAOImpl(ElevatorFactory elevatorFactory, Elevators elevators) {
-        this.elevatorFactory = elevatorFactory;
+    public ElevatorDAOImpl(Elevators elevators) {
         this.elevators = elevators;
-    }
-
-    @Override
-    public Elevator update(int id, Integer floorDestination, boolean isUserFloor) throws ElevatorNotFoundException {
-        Elevator elevator = findById(id)
-                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
-
-        return elevatorFactory.create(floorDestination, isUserFloor).updateElevator(elevator);
-    }
-
-    @Override
-    public Elevator update(int id, int floor) throws ElevatorNotFoundException {
-        Elevator elevator = findById(id)
-                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
-
-        return elevatorFactory.create(floor).updateElevator(elevator);
-    }
-
-    @Override
-    public Elevator update(int id) throws ElevatorNotFoundException {
-        Elevator elevator = findById(id)
-                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
-
-        return elevatorFactory.create().updateElevator(elevator);
     }
 
     @Override

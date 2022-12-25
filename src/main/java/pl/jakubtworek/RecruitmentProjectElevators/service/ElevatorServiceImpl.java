@@ -2,6 +2,7 @@ package pl.jakubtworek.RecruitmentProjectElevators.service;
 
 import org.springframework.stereotype.Service;
 import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
+import pl.jakubtworek.RecruitmentProjectElevators.factories.ElevatorFactory;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
@@ -13,47 +14,38 @@ import static java.util.Comparator.comparingInt;
 @Service
 public class ElevatorServiceImpl implements ElevatorService {
     private final ElevatorDAO elevatorDAO;
+    private final ElevatorFactory elevatorFactory;
 
-    public ElevatorServiceImpl(ElevatorDAO elevatorDAO) {
+    public ElevatorServiceImpl(ElevatorDAO elevatorDAO, ElevatorFactory elevatorFactory) {
         this.elevatorDAO = elevatorDAO;
+        this.elevatorFactory = elevatorFactory;
     }
 
     @Override
     public Elevator update(int id, int floor) throws ElevatorNotFoundException {
-        return elevatorDAO.update(id, floor);
+        Elevator elevator = elevatorDAO.findById(id)
+                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
+
+        return elevatorFactory.create(floor).updateElevator(elevator);
     }
 
     @Override
     public Elevator pickup(int userFloor, int destinationFloor) throws ElevatorNotFoundException {
         Elevator elevator = getProperElevator(userFloor, destinationFloor);
-        int id = elevator.getId();
 
         if (isMoveToUserFloor(elevator, userFloor)) {
-            elevatorDAO.update(
-                    id,
-                    userFloor,
-                    true
-            );
+            elevatorFactory.create(userFloor, true).updateElevator(elevator);
         }
-        elevatorDAO.update(
-                id,
-                destinationFloor,
-                false
-        );
 
-        return elevator;
+        return elevatorFactory.create(userFloor, true).updateElevator(elevator);
     }
 
     @Override
-    public List<Elevator> step() throws ElevatorNotFoundException {
+    public List<Elevator> step() {
         List<Elevator> elevators = elevatorDAO.findElevatorToMove();
 
         for (Elevator elevator : elevators) {
-            int elevatorId = elevator.getId();
-
-            elevatorDAO.update(
-                    elevatorId
-            );
+            elevatorFactory.create().updateElevator(elevator);
         }
 
         return elevators;

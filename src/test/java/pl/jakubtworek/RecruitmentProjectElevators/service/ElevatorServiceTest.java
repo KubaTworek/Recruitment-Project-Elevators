@@ -20,8 +20,8 @@ class ElevatorServiceTest {
         elevatorDAO = mock(ElevatorDAO.class);
 
         elevatorService = new ElevatorServiceImpl(
-                elevatorDAO
-        );
+                elevatorDAO,
+                elevatorFactory);
 
         ElevatorsTest elevatorsTest = new ElevatorsTest();
         when(elevatorDAO.findAll()).thenReturn(elevatorsTest.getElevators());

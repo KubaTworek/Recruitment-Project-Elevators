@@ -1,6 +1,7 @@
 package pl.jakubtworek.RecruitmentProjectElevators.service;
 
 import org.springframework.stereotype.Service;
+import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
@@ -18,12 +19,12 @@ public class ElevatorServiceImpl implements ElevatorService {
     }
 
     @Override
-    public void update(int id, int floor) {
+    public void update(int id, int floor) throws ElevatorNotFoundException {
         elevatorDAO.update(id, floor);
     }
 
     @Override
-    public void pickup(int userFloor, int destinationFloor) {
+    public void pickup(int userFloor, int destinationFloor) throws ElevatorNotFoundException {
         Elevator elevator = getProperElevator(userFloor, destinationFloor);
         int id = elevator.getId();
 
@@ -43,7 +44,7 @@ public class ElevatorServiceImpl implements ElevatorService {
     }
 
     @Override
-    public void step() {
+    public void step() throws ElevatorNotFoundException {
         List<Elevator> elevators = elevatorDAO.findElevatorToMove();
 
         for (Elevator elevator : elevators) {
@@ -60,10 +61,10 @@ public class ElevatorServiceImpl implements ElevatorService {
         return elevatorDAO.findAll();
     }
 
-    private Elevator getProperElevator(int userFloor, int destination) {
+    private Elevator getProperElevator(int userFloor, int destination) throws ElevatorNotFoundException {
         return getElevatorMovingInTheSameDirection(userFloor, destination)
                 .orElse(getNearestElevator(userFloor)
-                        .orElse(null));
+                        .orElseThrow(() -> new ElevatorNotFoundException("There are not available elevator")));
     }
 
     private Optional<Elevator> getElevatorMovingInTheSameDirection(int userFloor, int destination) {

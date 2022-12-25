@@ -2,6 +2,7 @@ package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
+import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
 import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
@@ -20,8 +21,9 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator update(int id, Integer floorDestination, boolean isUserFloor) {
-        Elevator elevator = findById(id).orElse(null);
+    public Elevator update(int id, Integer floorDestination, boolean isUserFloor) throws ElevatorNotFoundException {
+        Elevator elevator = findById(id)
+                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
 
         addNextFloor(isUserFloor, floorDestination, elevator);
 
@@ -29,8 +31,9 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator update(int id, int floor) {
-        Elevator elevator = findById(id).orElse(null);
+    public Elevator update(int id, int floor) throws ElevatorNotFoundException {
+        Elevator elevator = findById(id)
+                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
 
         elevator.setNumberOfFloor(floor);
         elevator.getPlannedFloors().clear();
@@ -39,8 +42,9 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator update(int id) {
-        Elevator elevator = findById(id).orElse(null);
+    public Elevator update(int id) throws ElevatorNotFoundException {
+        Elevator elevator = findById(id)
+                .orElseThrow(() -> new ElevatorNotFoundException("There are no elevator with that id: " + id));
 
         boolean isUserFloor = false;
         Integer floorDestination = null;

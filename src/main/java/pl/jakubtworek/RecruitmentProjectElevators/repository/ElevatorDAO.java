@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ElevatorDAO {
-    Elevator updateForPickup(int id, Integer floorDestination, boolean isUserFloor);
+    Elevator update(int id, Integer floorDestination, boolean isUserFloor);
 
-    Elevator updateForStep(int id);
+    Elevator update(int id);
 
     List<Elevator> findAll();
 

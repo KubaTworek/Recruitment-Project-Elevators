@@ -20,7 +20,7 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator updateForPickup(int id, Integer floorDestination, boolean isUserFloor) {
+    public Elevator update(int id, Integer floorDestination, boolean isUserFloor) {
         Elevator elevator = findById(id).orElse(null);
 
         addNextFloor(isUserFloor, floorDestination, elevator);
@@ -29,7 +29,7 @@ public class ElevatorDAOImpl implements ElevatorDAO {
     }
 
     @Override
-    public Elevator updateForStep(int id) {
+    public Elevator update(int id) {
         Elevator elevator = findById(id).orElse(null);
 
         boolean isUserFloor = false;

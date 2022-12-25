@@ -23,14 +23,14 @@ public class ElevatorServiceImpl implements ElevatorService {
         int id = elevator.getId();
 
         if (userFloor != elevator.getNumberOfFloor()) {
-            elevatorDAO.updateForPickup(
+            elevatorDAO.update(
                     id,
                     userFloor,
                     true
             );
         }
 
-        elevatorDAO.updateForPickup(
+        elevatorDAO.update(
                 id,
                 destinationFloor,
                 false
@@ -44,7 +44,7 @@ public class ElevatorServiceImpl implements ElevatorService {
         for (Elevator elevator : elevators) {
             int elevatorId = elevator.getId();
 
-            elevatorDAO.updateForStep(
+            elevatorDAO.update(
                     elevatorId
             );
         }

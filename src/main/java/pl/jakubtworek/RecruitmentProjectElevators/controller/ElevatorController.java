@@ -22,7 +22,7 @@ public class ElevatorController {
     }
 
     @CrossOrigin
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ElevatorResponse> update(@PathVariable int id,
                                                    @RequestParam int floor)
             throws ElevatorNotFoundException, FloorNotFoundException {
@@ -35,7 +35,7 @@ public class ElevatorController {
     }
 
     @CrossOrigin
-    @PostMapping("/pickup")
+    @PutMapping("/pickup")
     public ResponseEntity<ElevatorResponse> pickup(@RequestParam int sourceFloor,
                                                    @RequestParam int destinationFloor)
             throws ElevatorNotFoundException, FloorNotFoundException {
@@ -70,5 +70,20 @@ public class ElevatorController {
                 .toList();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping("/restart")
+    public ResponseEntity<String> restart() {
+        elevatorService.status()
+                .forEach(elevator -> {
+                    try {
+                        elevatorService.update(elevator.getId(), 0);
+                    } catch (ElevatorNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+        return new ResponseEntity<>("All elevators were moved to 0 floor", HttpStatus.OK);
     }
 }

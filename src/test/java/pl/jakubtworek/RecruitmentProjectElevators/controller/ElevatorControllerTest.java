@@ -14,6 +14,7 @@ import pl.jakubtworek.RecruitmentProjectElevators.service.ElevatorService;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class ElevatorControllerTest {
@@ -45,6 +46,16 @@ public class ElevatorControllerTest {
     }
 
     @Test
+    void shouldReturnException_whenFloorIsOutOfRange1() {
+        // when
+        Exception exception = assertThrows(FloorNotFoundException.class,
+                () -> elevatorController.update(1, 17));
+
+        // then
+        assertEquals("There are only 10 floors", exception.getMessage());
+    }
+
+    @Test
     void shouldReturnElevator_whichHasBeenPickedUp() throws FloorNotFoundException, ElevatorNotFoundException {
         // when
         when(elevatorService.pickup(anyInt(), anyInt())).thenReturn(new Elevator(1, 0));
@@ -58,6 +69,26 @@ public class ElevatorControllerTest {
     }
 
     @Test
+    void shouldReturnException_whenFloorIsOutOfRange2() {
+        // when
+        Exception exception = assertThrows(FloorNotFoundException.class,
+                () -> elevatorController.pickup(0, 17));
+
+        // then
+        assertEquals("There are only 10 floors", exception.getMessage());
+    }
+
+    @Test
+    void shouldReturnException_whenFloorIsOutOfRange3() {
+        // when
+        Exception exception = assertThrows(FloorNotFoundException.class,
+                () -> elevatorController.pickup(-5, 5));
+
+        // then
+        assertEquals("There are only 10 floors", exception.getMessage());
+    }
+
+    @Test
     void shouldReturnElevators_whichHasToMove() throws ElevatorNotFoundException {
         // when
         when(elevatorService.step()).thenReturn(List.of(new Elevator(1, 0), new Elevator(2, 5)));
@@ -67,6 +98,18 @@ public class ElevatorControllerTest {
         // then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(2, response.getBody().size());
+    }
+
+    @Test
+    void shouldReturnException_whenElevatorIsNotAvailable() throws ElevatorNotFoundException {
+        // when
+        when(elevatorService.step()).thenReturn(List.of());
+
+        Exception exception = assertThrows(ElevatorNotFoundException.class,
+                () -> elevatorController.step());
+
+        // then
+        assertEquals("There are not elevators to move", exception.getMessage());
     }
 
     @Test

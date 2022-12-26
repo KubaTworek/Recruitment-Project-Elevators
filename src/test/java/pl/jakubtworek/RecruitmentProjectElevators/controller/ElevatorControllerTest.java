@@ -123,4 +123,16 @@ public class ElevatorControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(2, response.getBody().size());
     }
+
+    @Test
+    void shouldReturnResetAllElevators() {
+        // when
+        when(elevatorService.status()).thenReturn(List.of(new Elevator(1, 0), new Elevator(2, 5)));
+
+        ResponseEntity<String> response = elevatorController.restart();
+
+        // then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("All elevators were moved to 0 floor", response.getBody());
+    }
 }

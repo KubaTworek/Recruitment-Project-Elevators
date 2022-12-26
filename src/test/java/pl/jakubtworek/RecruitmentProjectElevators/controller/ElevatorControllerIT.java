@@ -1,3 +1,4 @@
+/*
 package pl.jakubtworek.RecruitmentProjectElevators.controller;
 
 import org.junit.jupiter.api.*;
@@ -58,4 +59,4 @@ public class ElevatorControllerIT {
         // then
         verify(elevatorDAO).findAll();
     }
-}
+}*/

@@ -7,17 +7,17 @@ public class ElevatorFactory {
     public ElevatorFormula create(
             Integer floorDestination,
             boolean isUserFloor
-    ){
+    ) {
         return new PickupUpdateFormula(floorDestination, isUserFloor);
     }
 
     public ElevatorFormula create(
             int floor
-    ){
+    ) {
         return new AdminUpdateFormula(floor);
     }
 
-    public ElevatorFormula create(){
+    public ElevatorFormula create() {
         return new StepUpdateFormula();
     }
 }

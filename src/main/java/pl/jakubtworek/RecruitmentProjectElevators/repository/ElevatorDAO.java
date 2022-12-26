@@ -1,6 +1,5 @@
 package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
-import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
 import java.util.List;

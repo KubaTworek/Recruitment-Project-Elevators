@@ -2,14 +2,9 @@ package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
-import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
-import pl.jakubtworek.RecruitmentProjectElevators.factories.ElevatorFactory;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
-import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

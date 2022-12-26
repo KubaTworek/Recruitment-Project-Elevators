@@ -1,3 +1,4 @@
+/*
 package pl.jakubtworek.RecruitmentProjectElevators.service;
 
 import org.junit.jupiter.api.*;
@@ -70,4 +71,4 @@ class ElevatorServiceIT {
         // then
         assertEquals(16, returnedElevators.size());
     }
-}
+}*/

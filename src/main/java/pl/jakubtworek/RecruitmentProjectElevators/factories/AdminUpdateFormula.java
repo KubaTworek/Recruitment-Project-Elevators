@@ -4,6 +4,7 @@ import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
 public class AdminUpdateFormula implements ElevatorFormula {
     private final int floor;
+
     public AdminUpdateFormula(int floor) {
         this.floor = floor;
     }

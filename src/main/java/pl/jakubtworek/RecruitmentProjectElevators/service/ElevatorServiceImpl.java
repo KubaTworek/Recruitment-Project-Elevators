@@ -37,7 +37,7 @@ public class ElevatorServiceImpl implements ElevatorService {
             elevatorFactory.create(userFloor, true).updateElevator(elevator);
         }
 
-        return elevatorFactory.create(userFloor, true).updateElevator(elevator);
+        return elevatorFactory.create(destinationFloor, false).updateElevator(elevator);
     }
 
     @Override
@@ -72,6 +72,7 @@ public class ElevatorServiceImpl implements ElevatorService {
 
     private Optional<Elevator> getNearestElevator(int userFloor) {
         return elevatorDAO.findAll().stream()
+                .filter(e -> e.getPlannedFloors().isEmpty())
                 .min(comparingInt(e -> Math.abs(e.getNumberOfFloor() - userFloor)));
     }
 

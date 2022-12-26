@@ -39,7 +39,7 @@ class ElevatorServiceTest {
     }
 
     @Test
-    void verifyInvokingMethods_whenUpdate() throws ElevatorNotFoundException {
+    void verifyFactoryCreate_whenUpdateElevator() throws ElevatorNotFoundException {
         // when
         when(elevatorFactory.create(anyInt())).thenReturn(new AdminUpdateFormula(4));
 
@@ -50,7 +50,7 @@ class ElevatorServiceTest {
     }
 
     @Test
-    void verifyInvokingMethods_whenPickup() throws ElevatorNotFoundException {
+    void verifyFactoryCreateTwoTimes_whenPickupElevatorOnDifferentFloor() throws ElevatorNotFoundException {
         // when
         when(elevatorFactory.create(anyInt(), anyBoolean())).thenReturn(new PickupUpdateFormula(4, false));
 
@@ -61,7 +61,7 @@ class ElevatorServiceTest {
     }
 
     @Test
-    void verifyInvokingMethods_whenPickupFromTheZeroFloor() throws ElevatorNotFoundException {
+    void verifyFactoryCreateOneTime_whenPickupElevatorOnSourceFloor() throws ElevatorNotFoundException {
         // when
         when(elevatorFactory.create(anyInt(), anyBoolean())).thenReturn(new PickupUpdateFormula(4, true));
 
@@ -72,7 +72,7 @@ class ElevatorServiceTest {
     }
 
     @Test
-    void verifyInvokingMethods_whenStep() throws ElevatorNotFoundException {
+    void verifyFactoryCreateTwoTimes_whenStepHasToMoveTwoElevators() throws ElevatorNotFoundException {
         // when
         when(elevatorFactory.create()).thenReturn(new StepUpdateFormula());
 
@@ -84,7 +84,7 @@ class ElevatorServiceTest {
     }
 
     @Test
-    void verifyInvokingMethods_whenStatus() {
+    void verifyDAOFindAll_whenStatus() {
         // when
         elevatorService.status();
 

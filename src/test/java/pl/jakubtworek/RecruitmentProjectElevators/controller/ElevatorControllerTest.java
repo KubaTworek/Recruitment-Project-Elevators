@@ -46,7 +46,7 @@ public class ElevatorControllerTest {
     }
 
     @Test
-    void shouldReturnException_whenFloorIsOutOfRange1() {
+    void shouldThrowException_whenFloorIsOutOfRange() {
         // when
         Exception exception = assertThrows(FloorNotFoundException.class,
                 () -> elevatorController.update(1, 17));
@@ -69,7 +69,7 @@ public class ElevatorControllerTest {
     }
 
     @Test
-    void shouldReturnException_whenFloorIsOutOfRange2() {
+    void shouldThrowException_whenFloorDestinationIsOutOfRange() {
         // when
         Exception exception = assertThrows(FloorNotFoundException.class,
                 () -> elevatorController.pickup(0, 17));
@@ -79,7 +79,7 @@ public class ElevatorControllerTest {
     }
 
     @Test
-    void shouldReturnException_whenFloorIsOutOfRange3() {
+    void shouldThrowException_whenFloorSourceIsOutOfRange() {
         // when
         Exception exception = assertThrows(FloorNotFoundException.class,
                 () -> elevatorController.pickup(-5, 5));
@@ -101,7 +101,7 @@ public class ElevatorControllerTest {
     }
 
     @Test
-    void shouldReturnException_whenElevatorIsNotAvailable() throws ElevatorNotFoundException {
+    void shouldThrowException_whenElevatorsAreNotAvailableToMoe() throws ElevatorNotFoundException {
         // when
         when(elevatorService.step()).thenReturn(List.of());
 

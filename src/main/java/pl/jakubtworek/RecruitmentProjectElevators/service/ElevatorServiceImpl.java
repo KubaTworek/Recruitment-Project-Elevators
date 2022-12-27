@@ -6,8 +6,7 @@ import pl.jakubtworek.RecruitmentProjectElevators.factories.ElevatorFactory;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Comparator.comparingInt;
 

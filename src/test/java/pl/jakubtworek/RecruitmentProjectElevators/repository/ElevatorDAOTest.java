@@ -1,19 +1,14 @@
 package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
-import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
-import pl.jakubtworek.RecruitmentProjectElevators.data.ElevatorsTest;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
-import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
+import pl.jakubtworek.RecruitmentProjectElevators.data.*;
+import pl.jakubtworek.RecruitmentProjectElevators.model.*;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ElevatorDAOTest {
     @Mock

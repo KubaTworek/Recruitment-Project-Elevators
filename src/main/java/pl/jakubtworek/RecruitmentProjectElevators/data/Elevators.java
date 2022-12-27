@@ -3,8 +3,7 @@ package pl.jakubtworek.RecruitmentProjectElevators.data;
 import org.springframework.stereotype.Component;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class Elevators {

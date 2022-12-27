@@ -1,20 +1,15 @@
 package pl.jakubtworek.RecruitmentProjectElevators.controller;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
-import pl.jakubtworek.RecruitmentProjectElevators.exception.FloorNotFoundException;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
-import pl.jakubtworek.RecruitmentProjectElevators.model.ElevatorResponse;
+import org.springframework.http.*;
+import pl.jakubtworek.RecruitmentProjectElevators.exception.*;
+import pl.jakubtworek.RecruitmentProjectElevators.model.*;
 import pl.jakubtworek.RecruitmentProjectElevators.service.ElevatorService;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ElevatorControllerTest {
@@ -125,7 +120,7 @@ public class ElevatorControllerTest {
     }
 
     @Test
-    void shouldReturnResetAllElevators() {
+    void shouldResetAllElevators() {
         // when
         when(elevatorService.status()).thenReturn(List.of(new Elevator(1, 0), new Elevator(2, 5)));
 

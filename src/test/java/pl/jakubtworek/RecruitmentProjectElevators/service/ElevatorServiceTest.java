@@ -1,14 +1,10 @@
 package pl.jakubtworek.RecruitmentProjectElevators.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import pl.jakubtworek.RecruitmentProjectElevators.data.ElevatorsTest;
 import pl.jakubtworek.RecruitmentProjectElevators.exception.ElevatorNotFoundException;
-import pl.jakubtworek.RecruitmentProjectElevators.factories.AdminUpdateFormula;
-import pl.jakubtworek.RecruitmentProjectElevators.factories.ElevatorFactory;
-import pl.jakubtworek.RecruitmentProjectElevators.factories.PickupUpdateFormula;
-import pl.jakubtworek.RecruitmentProjectElevators.factories.StepUpdateFormula;
+import pl.jakubtworek.RecruitmentProjectElevators.factories.*;
 import pl.jakubtworek.RecruitmentProjectElevators.repository.ElevatorDAO;
 
 import java.util.Optional;

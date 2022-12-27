@@ -1,7 +1,6 @@
 package pl.jakubtworek.RecruitmentProjectElevators.model;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class Elevator {
     private final int id;

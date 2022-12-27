@@ -1,11 +1,8 @@
 package pl.jakubtworek.RecruitmentProjectElevators.factories;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
-import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
+import org.junit.jupiter.params.provider.*;
+import pl.jakubtworek.RecruitmentProjectElevators.model.*;
 
 import java.util.stream.Stream;
 

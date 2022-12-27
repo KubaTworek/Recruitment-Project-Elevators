@@ -1,11 +1,9 @@
 package pl.jakubtworek.RecruitmentProjectElevators.factories;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 
 class ElevatorFactoryTest {
     private ElevatorFactory elevatorFactory;

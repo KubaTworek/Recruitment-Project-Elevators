@@ -1,8 +1,6 @@
 package pl.jakubtworek.RecruitmentProjectElevators.factories;
 
-import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
-import pl.jakubtworek.RecruitmentProjectElevators.model.Floor;
-import pl.jakubtworek.RecruitmentProjectElevators.model.TypeOfTarget;
+import pl.jakubtworek.RecruitmentProjectElevators.model.*;
 
 import java.util.Objects;
 

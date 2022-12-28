@@ -4,14 +4,14 @@ getElevetors();
 // ASYNC METHODS
 
 async function getElevetors() {
-    const resp = await fetch(APIURL);
+    const resp = await fetch(APIURL + '/status');
     const respData = await resp.json();
 
     fillDivs(respData)
 }
 
 async function sendData(sourceFloor, destinationFloor) {
-    await fetch(APIURL + '/pickup?sourceFloor=' + sourceFloor + '&destinationFloor=' + destinationFloor, {method: 'post'});
+    await fetch(APIURL + '/pickup?sourceFloor=' + sourceFloor + '&destinationFloor=' + destinationFloor, {method: 'put'});
 }
 
 async function step() {

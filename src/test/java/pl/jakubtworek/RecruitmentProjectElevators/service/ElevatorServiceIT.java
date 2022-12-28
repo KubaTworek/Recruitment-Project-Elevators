@@ -33,8 +33,6 @@ class ElevatorServiceIT {
 
     @Test
     void shouldReturnUpdatedElevator() throws Exception {
-        // given
-
         // when
         Elevator updatedElevator = elevatorService.update(1, 4);
 
@@ -46,8 +44,6 @@ class ElevatorServiceIT {
 
     @Test
     void shouldThrowException_whenElevatorNotExist() {
-        // given
-
         // when
         when(elevatorDAO.findById(anyInt())).thenReturn(Optional.empty());
 
@@ -60,8 +56,6 @@ class ElevatorServiceIT {
 
     @Test
     void shouldReturnElevatorToPickUp() throws Exception {
-        // given
-
         // when
         Elevator updatedElevator = elevatorService.pickup(2, 4);
 
@@ -73,8 +67,6 @@ class ElevatorServiceIT {
 
     @Test
     void shouldThrowException_whenNoAvailableElevator() {
-        // given
-
         // when
         when(elevatorDAO.findAll()).thenReturn(List.of());
 
@@ -87,8 +79,6 @@ class ElevatorServiceIT {
 
     @Test
     void shouldReturnElevatorsToMove() throws Exception {
-        // given
-
         // when
         List<Elevator> elevatorsToMove = elevatorService.step();
 
@@ -103,8 +93,6 @@ class ElevatorServiceIT {
 
     @Test
     void shouldReturnAllElevators() {
-        // given
-
         // when
         List<Elevator> allElevators = elevatorService.status();
 

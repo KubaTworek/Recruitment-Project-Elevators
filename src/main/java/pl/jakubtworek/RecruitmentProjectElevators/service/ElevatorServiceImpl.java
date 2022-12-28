@@ -81,8 +81,8 @@ public class ElevatorServiceImpl implements ElevatorService {
     }
 
     private boolean isUserFloorIsBetweenDestinationsOfElevator(Elevator e, int sourceFloor) {
-        return (sourceFloor < e.getNumberOfFloor() && sourceFloor > e.getPlannedFloors().peek().numberOfFloor())
-                || (sourceFloor > e.getNumberOfFloor() && sourceFloor < e.getPlannedFloors().peek().numberOfFloor());
+        return (sourceFloor <= e.getNumberOfFloor() && sourceFloor >= e.getPlannedFloors().peek().numberOfFloor())
+                || (sourceFloor >= e.getNumberOfFloor() && sourceFloor <= e.getPlannedFloors().peek().numberOfFloor());
     }
 
     private boolean isElevatorsComingUp(Elevator e, int sourceFloor, int destinationFloor) {

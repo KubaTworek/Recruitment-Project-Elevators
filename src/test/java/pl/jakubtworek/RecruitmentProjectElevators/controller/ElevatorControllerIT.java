@@ -115,7 +115,7 @@ public class ElevatorControllerIT {
     @Test
     void shouldRestartAllElevators() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                        .put("/elevators/restart")
+                        .put("/elevators/reset")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

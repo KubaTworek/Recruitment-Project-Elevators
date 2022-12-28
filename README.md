@@ -24,6 +24,7 @@
 - Java 18
 - Spring Boot
 - JUnit, Mockito
+- HTML, CSS, JavaScript
 
 ## Run and Test
 
@@ -57,6 +58,7 @@ open web/index.html
 * Pickup an Elevator: `PUT/elevators/pickup?sourceFloor={}&destinationFloor={}`
 * Make a step in simulation: `PUT/elevators/step`
 * Display status of every Elevator: `GET/elevators/status`
+* Set floor for every Elevator on 0 and delete planned routes: `PUT/elevators/reset`
 
 
 ## Algorithm

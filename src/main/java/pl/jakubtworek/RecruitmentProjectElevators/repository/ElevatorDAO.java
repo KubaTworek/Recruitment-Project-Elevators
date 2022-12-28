@@ -2,7 +2,8 @@ package pl.jakubtworek.RecruitmentProjectElevators.repository;
 
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public interface ElevatorDAO {
     List<Elevator> findAll();

@@ -4,7 +4,8 @@ import org.springframework.stereotype.Repository;
 import pl.jakubtworek.RecruitmentProjectElevators.data.Elevators;
 import pl.jakubtworek.RecruitmentProjectElevators.model.Elevator;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository

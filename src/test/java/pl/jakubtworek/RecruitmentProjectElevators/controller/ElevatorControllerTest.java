@@ -124,7 +124,7 @@ public class ElevatorControllerTest {
         // when
         when(elevatorService.status()).thenReturn(List.of(new Elevator(1, 0), new Elevator(2, 5)));
 
-        ResponseEntity<String> response = elevatorController.restart();
+        ResponseEntity<String> response = elevatorController.reset();
 
         // then
         assertEquals(HttpStatus.OK, response.getStatusCode());

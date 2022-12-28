@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-class ElevatorServiceTest {
+class ElevatorServiceTestX {
     @Mock
     private ElevatorDAO elevatorDAO;
     @Mock

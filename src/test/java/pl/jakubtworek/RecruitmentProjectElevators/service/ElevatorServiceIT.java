@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class ElevatorServiceIT {
+public class ElevatorServiceIT {
     @MockBean
     private ElevatorDAO elevatorDAO;
 

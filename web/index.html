@@ -19,20 +19,20 @@
     <section class="button-container">
         <button id="step-button" onclick="makeStep()">Step</button>
         <button id="pickup-button" onclick="getValuesForPickup()">PickUp</button>
-            <div class="input-container">
+            <div class="value-container">
                 <label for="sourceFloor">Source</label>
-                <input id="sourceFloor" type="number" min="0" max="10">
+                <div class="input-container"><button onclick="minusSource()">-</button><input disabled id="sourceFloor" type="number" min="0" max="10" value=0><button onclick="plusSource()">+</button></div>
 
                 <label for="destinationFloor">Destination</label>
-                <input id="destinationFloor" type="number" min="0" max="10">
+                <div class="input-container"><button onclick="minusDestination()">-</button><input disabled id="destinationFloor" type="number" min="0" max="10" value=0><button onclick="plusDestination()">+</button></div>
             </div>
         <button id="update-button" onclick="getValuesForUpdate()">Update</button>
-            <div class="input-container">
+            <div class="value-container">
                 <label for="elevatorId">ID</label>
-                <input id="elevatorId" type="number" min="1" max="16">
+                <div class="input-container"><button onclick="minusId()">-</button><input disabled id="elevatorId" type="number" min="1" max="16" value=0><button onclick="plusId()">+</button></div>
 
                 <label for="floor">Floor</label>
-                <input id="floor" type="number" min="0" max="10">
+                    <div class="input-container"><button onclick="minusFloor()">-</button><input disabled id="floor" type="number" min="0" max="10" value=0><button onclick="plusFloor()">+</button></div>
             </div>
         <button id="reset-button" onclick="reset()">Reset</button>
     </section>

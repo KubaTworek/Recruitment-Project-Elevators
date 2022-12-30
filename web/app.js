@@ -95,3 +95,61 @@ function getValuesForUpdate() {
 function makeStep() {
     step()
 }
+
+// BUTTON METHODS
+
+function minusSource() {
+    const input = document.getElementById("sourceFloor");
+    if(input.value > 0){
+        input.value--;
+    }
+}
+
+function plusSource() {
+    const input = document.getElementById("sourceFloor");
+    if(input.value < 9){
+        input.value++;
+    }
+}
+
+function minusDestination() {
+    const input = document.getElementById("destinationFloor");
+    if(input.value > 0){
+        input.value--;
+    }
+}
+
+function plusDestination() {
+    const input = document.getElementById("destinationFloor");
+    if(input.value < 9){
+        input.value++;
+    }
+}
+
+function minusId() {
+    const input = document.getElementById("elevatorId");
+    if(input.value > 1){
+        input.value--;
+    }
+}
+
+function plusId() {
+    const input = document.getElementById("elevatorId");
+    if(input.value < 16){
+        input.value++;
+    }
+}
+
+function minusFloor() {
+    const input = document.getElementById("floor");
+    if(input.value > 0){
+        input.value--;
+    }
+}
+
+function plusFloor() {
+    const input = document.getElementById("floor");
+    if(input.value < 9){
+        input.value++;
+    }
+}

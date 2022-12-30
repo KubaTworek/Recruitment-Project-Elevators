@@ -16,6 +16,7 @@ header {
     font-size: 1.5rem;
     color: #5b5852;
     text-align: center;
+    margin-top: 1rem;
 }
 
 header .header__title {
@@ -24,6 +25,8 @@ header .header__title {
 
 main {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-container {
@@ -31,7 +34,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 2rem auto;
+    margin: auto;
 }
 
 .button-container button {
@@ -53,7 +56,7 @@ main {
     transition: background-color 0.6s;
 }
 
-.input-container {
+.value-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,36 +66,63 @@ main {
     margin-bottom: 0.2rem;
 }
 
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container button {
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    padding: 0.2rem;
+}
+
+.input-container button:first-child {
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.input-container button:last-child {
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
 .input-container input {
     width: 5rem;
+    height: 2rem;
+    background-color: #eee;
+    color: #111;
     font-size: 1.2rem;
     text-align: center;
     -webkit-appearance: none;
     display: block;
     padding: 0.2rem;
-    margin: 0.2rem;
     line-height: 1rem;
     border: none;
-    border-radius: 0.4rem;
     caret-color: transparent;
     cursor: pointer;
 }
 
-.input-container input:focus {
+.value-container input:focus {
     box-shadow: 0 0 0.5rem #ebebeb;
     transition: box-shadow 0.2s;
 }
 
-.input-container input::-webkit-inner-spin-button {
+.value-container input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-.input-container input::placeholder {
+.value-container input::placeholder {
     color: #B0BEC5;
 }
 
-.input-container input:focus {
+.value-container input:focus {
     outline: none;
+}
+
+.value-container input:disabled {
+    background-color: #eee;
+    color: #111;
 }
 
 #board {
@@ -101,7 +131,6 @@ main {
     justify-content: center;
     color: #ebebeb;
     text-align: center;
-    padding: 1rem;
     margin: auto;
 }
 

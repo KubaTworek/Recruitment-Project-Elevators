@@ -4,6 +4,7 @@
 
 body {
     background-color: #a2a2a4;
+    color: #222;
     font-family: sans-serif;
     margin: 0;
 }
@@ -91,7 +92,6 @@ main {
     width: 5rem;
     height: 2rem;
     background-color: #eee;
-    color: #111;
     font-size: 1.2rem;
     text-align: center;
     -webkit-appearance: none;
@@ -103,24 +103,24 @@ main {
     cursor: pointer;
 }
 
-.value-container input:focus {
+.input-container input:focus {
     box-shadow: 0 0 0.5rem #ebebeb;
     transition: box-shadow 0.2s;
 }
 
-.value-container input::-webkit-inner-spin-button {
+.input-container input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-.value-container input::placeholder {
+.input-container input::placeholder {
     color: #B0BEC5;
 }
 
-.value-container input:focus {
+.input-container input:focus {
     outline: none;
 }
 
-.value-container input:disabled {
+.input-container input:disabled {
     background-color: #eee;
     color: #111;
 }
@@ -143,13 +143,13 @@ main {
 .place {
     width: 50px;
     height: 50px;
-    background-color: #f0f2ed;
+    background-color: #eee;
     margin: 5px;
 }
 
 .taken {
     width: 50px;
     height: 50px;
-    background-color: #11130f;
+    background-color: #222;
     margin: 5px;
 }

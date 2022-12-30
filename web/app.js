@@ -65,7 +65,7 @@ function fillDivs(response) {
 
 function clearDivs() {
     for (let i = 1; i < 17; i++) {
-        for (let j = 0; j < 9; j++) {
+        for (let j = 0; j < 10; j++) {
             let firstClass = '.elevator-' + i
             let secondClass = '.floor-' + j
             const innerDiv = document
@@ -100,56 +100,56 @@ function makeStep() {
 
 function minusSource() {
     const input = document.getElementById("sourceFloor");
-    if(input.value > 0){
+    if (input.value > 0) {
         input.value--;
     }
 }
 
 function plusSource() {
     const input = document.getElementById("sourceFloor");
-    if(input.value < 9){
+    if (input.value < 9) {
         input.value++;
     }
 }
 
 function minusDestination() {
     const input = document.getElementById("destinationFloor");
-    if(input.value > 0){
+    if (input.value > 0) {
         input.value--;
     }
 }
 
 function plusDestination() {
     const input = document.getElementById("destinationFloor");
-    if(input.value < 9){
+    if (input.value < 9) {
         input.value++;
     }
 }
 
 function minusId() {
     const input = document.getElementById("elevatorId");
-    if(input.value > 1){
+    if (input.value > 1) {
         input.value--;
     }
 }
 
 function plusId() {
     const input = document.getElementById("elevatorId");
-    if(input.value < 16){
+    if (input.value < 16) {
         input.value++;
     }
 }
 
 function minusFloor() {
     const input = document.getElementById("floor");
-    if(input.value > 0){
+    if (input.value > 0) {
         input.value--;
     }
 }
 
 function plusFloor() {
     const input = document.getElementById("floor");
-    if(input.value < 9){
+    if (input.value < 9) {
         input.value++;
     }
 }

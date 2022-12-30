@@ -1,5 +1,5 @@
 # Recruitment-Project-Elevators
-> The API represents an elevator management system. The project was written in Java using Spring. The database, as it is an implementation detail and the fact that it was not the main goal of the project was skipped, and its functions are performed by the 'Collections' library. The project is primarily focused on the implementation of the algorithm, but attention was also paid to the appropriate architecture of the application, clean code, and the use of good object-oriented programming practices.
+> The application represents an elevator management system. API was written in Java using Spring and frontend was written by HTML, CSS and JavaScript. The database, as it is an implementation detail and the fact that it was not the main goal of the project. I skipped to create one, and its functions are performed by the 'Collections' library. The project is primarily focused on the implementation of the algorithm, but attention was also paid to the appropriate architecture of the application, clean code, and the use of good object-oriented programming practices.
 
 
 ## Table of Contents

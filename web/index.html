@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Elevetors</title>
+    <title>Elevators</title>
     <link href="style.css" rel="stylesheet">
     <script defer src="app.js"></script>
 </head>
@@ -14,18 +14,29 @@
 <header>
     <h1 class="header__title">Elevators System Management</h1>
 </header>
-<button id="pickup-button" onclick="getValuesForPickup()">PickUp</button>
-<button id="step-button" onclick="makeStep()">Step</button>
-<td>sourceFloor<input id="sourceFloor" type="number"></td>
-<td>destinationFloor<input id="destinationFloor" type="number"></td>
-<button id="update-button" onclick="getValuesForUpdate()">Update</button>
-<td>ID<input id="elevatorId" type="number"></td>
-<td>floor<input id="floor" type="number"></td>
-<button id="reset-button" onclick="reset()">Reset</button>
-<main>
-    <section id="board">
 
+<main>
+    <section class="button-container">
+        <button id="step-button" onclick="makeStep()">Step</button>
+        <button id="pickup-button" onclick="getValuesForPickup()">PickUp</button>
+            <div class="input-container">
+                <label for="sourceFloor">Source</label>
+                <input id="sourceFloor" type="number" min="0" max="10">
+
+                <label for="destinationFloor">Destination</label>
+                <input id="destinationFloor" type="number" min="0" max="10">
+            </div>
+        <button id="update-button" onclick="getValuesForUpdate()">Update</button>
+            <div class="input-container">
+                <label for="elevatorId">ID</label>
+                <input id="elevatorId" type="number" min="1" max="16">
+
+                <label for="floor">Floor</label>
+                <input id="floor" type="number" min="0" max="10">
+            </div>
+        <button id="reset-button" onclick="reset()">Reset</button>
     </section>
+    <section id="board"></section>
 </main>
 </body>
 
